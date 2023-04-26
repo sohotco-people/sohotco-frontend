@@ -1,3 +1,24 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    // 전역 변수 사용을 정의합니다. 추가하지 않으면 ESLint 규칙에 걸리게 됩니다.
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "plugins": [
+    // ESLint는 서드파티 플러그인 사용을 지원합니다.
+    // 플러그인 패키지를 설치하고, 해당 플러그인을 plugins에 추가하여 사용할 수 있습니다.
+  ],
+  "extends": [
+    // extends는 추가한 플러그인에서 사용할 규칙을 설정 합니다.
+    "next/core-web-vitals"
+    // "plugin:react/jsx-runtime"
+  ],
+  "rules": {
+    // ESLint 규칙을 지정합니다. extends 에서 지정된 규칙을 덮어 쓸수도 있습니다.
+    "semi": [
+      "error",
+      "never"
+    ]
+  }
 }

@@ -1,7 +1,5 @@
-const Label = ({forStr})=> {
-    return (
-        <label htmlFor={forStr}>{forStr}</label>
-    )
+const Label = ({ forStr }: any) => {
+  return <label htmlFor={forStr}>{forStr}</label>
 }
 
 export default Label

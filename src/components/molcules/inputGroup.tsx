@@ -1,15 +1,14 @@
-import Input from "../atoms/input"
-import Label from "../atoms/label"
+import { useState } from 'react'
+import LinedInput from '../atoms/linedInput'
 
-const InputGroup = ({groupId})=> {
+const InputGroup = () => {
+  const [text, setText] = useState('')
 
-    return (
-        <div>
-            <Label forStr={groupId}/>
-            <Input idStr={groupId} />
-        </div>
-    )
+  return (
+    <div>
+      <LinedInput text={text} setText={setText} />
+    </div>
+  )
 }
-
 
 export default InputGroup

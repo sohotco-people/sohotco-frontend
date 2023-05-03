@@ -1,6 +1,6 @@
 const baseurl = 'http://localhost:8080'
 
-export const fetchGet = async (path: string, headers = {}, params = {}) => {
+export const fetchGet = async (path: string, params = {}, headers = {}) => {
 
     const url = baseurl + path + '?' + new URLSearchParams(params).toString()
     const option = {
@@ -16,7 +16,7 @@ export const fetchGet = async (path: string, headers = {}, params = {}) => {
     }
 }
 
-export const fetchPost = async (path: string, headers = {}, params = {}) => {
+export const fetchPost = async (path: string, params = {}, headers = {}) => {
 
     const url = baseurl + path
     const option = {

@@ -1,4 +1,3 @@
-import style from './radio.module.css'
 
 interface Props {
     name: string

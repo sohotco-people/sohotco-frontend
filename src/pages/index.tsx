@@ -1,4 +1,3 @@
-import RoundBtn from '@/components/atoms/roundBtn'
 import Head from 'next/head'
 
 export default function Home() {

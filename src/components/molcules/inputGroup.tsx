@@ -6,7 +6,7 @@ const InputGroup = () => {
 
   return (
     <div>
-      <LinedInput text={text} setText={setText} />
+      <LinedInput text={text} onChange={e => setText(e.target.value)} />
     </div>
   )
 }

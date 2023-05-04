@@ -1,11 +1,12 @@
-import Input from '@atoms/input'
-import Label from '@atoms/label'
+import { useState } from 'react'
+import LinedInput from '../atoms/linedInput'
 
-const InputGroup = ({ groupId }: any) => {
+const InputGroup = () => {
+  const [text, setText] = useState('')
+
   return (
     <div>
-      <Label forStr={groupId} />
-      <Input idStr={groupId} />
+      <LinedInput text={text} onChange={e => setText(e.target.value)} />
     </div>
   )
 }

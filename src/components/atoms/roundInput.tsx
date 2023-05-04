@@ -1,15 +1,15 @@
-import { Dispatch, SetStateAction } from 'react'
+import { ChangeEventHandler } from 'react'
 
 interface Props {
   text: string
-  setText: Dispatch<SetStateAction<string>>
+  onChange: ChangeEventHandler<HTMLInputElement>
   placeholder?: string
   disabled?: boolean
 }
 
 const RoundInput: React.FC<Props> = ({
   text,
-  setText,
+  onChange,
   placeholder = '텍스트를 입력하세요',
   disabled = false,
 }) => {
@@ -17,7 +17,7 @@ const RoundInput: React.FC<Props> = ({
     <input
       type="text"
       value={text}
-      onChange={e => setText(e.target.value)}
+      onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
       className="h-13 w-full p-4 border disabled:border-gray1 border-black rounded-lg text-base/[17px] !outline-none"

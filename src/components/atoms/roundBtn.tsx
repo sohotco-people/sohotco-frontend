@@ -3,7 +3,7 @@ import { MouseEventHandler } from 'react'
 interface Props {
   type: string
   onClick: MouseEventHandler<HTMLButtonElement>
-  text?: string
+  children: React.ReactNode
 }
 
 /**
@@ -11,7 +11,7 @@ interface Props {
  * @param {string} type - white grey point
  */
 
-const RoundBtn: React.FC<Props> = ({ type, onClick, text = '확인' }) => {
+const RoundBtn: React.FC<Props> = ({ type, onClick, children }) => {
   const style = (function () {
     if (type === 'white') {
       return 'bg-white active:bg-gray4 text-black border border-black'
@@ -28,7 +28,7 @@ const RoundBtn: React.FC<Props> = ({ type, onClick, text = '확인' }) => {
       className={`${style} px-6 py-4 rounded-lg text-base/[17px] font-medium`}
       onClick={onClick}
     >
-      {text}
+      {children}
     </button>
   )
 }

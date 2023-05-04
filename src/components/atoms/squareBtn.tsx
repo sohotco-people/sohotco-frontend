@@ -3,7 +3,7 @@ import { MouseEventHandler } from 'react'
 interface Props {
   type: string
   onClick: MouseEventHandler<HTMLButtonElement>
-  text?: string
+  children: React.ReactNode
 }
 
 /**
@@ -11,7 +11,7 @@ interface Props {
  * @param {string} type - white grey point
  */
 
-const SquareBtn: React.FC<Props> = ({ type, onClick, text = '확인' }) => {
+const SquareBtn: React.FC<Props> = ({ type, onClick, children }) => {
   const style = (function () {
     if (type === 'white') {
       return 'bg-white active:bg-gray4 text-black'
@@ -28,7 +28,7 @@ const SquareBtn: React.FC<Props> = ({ type, onClick, text = '확인' }) => {
       className={`${style} px-6 py-4 text-base/[19px] font-medium`}
       onClick={onClick}
     >
-      {text}
+      {children}
     </button>
   )
 }

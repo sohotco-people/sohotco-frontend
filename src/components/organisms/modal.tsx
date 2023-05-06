@@ -7,12 +7,11 @@ interface Props {
     content: string
     onConfirm: MouseEventHandler
     onCancel: MouseEventHandler
-    onClose: MouseEventHandler
     confirmTxt?: string
     closeTxt?: string
 }
 
-const Modal: React.FC<Props> = ({ show, type = 'alert', title, content, onConfirm, onCancel, onClose, confirmTxt = '확인', closeTxt = '나가기' }) => {
+const Modal: React.FC<Props> = ({ show, type = 'alert', title, content, onConfirm, onCancel, confirmTxt = '확인', closeTxt = '나가기' }) => {
 
     const confirm = (
         <div className="items-center px-4 py-3 grid grid-cols-2 gap-2">
@@ -23,7 +22,7 @@ const Modal: React.FC<Props> = ({ show, type = 'alert', title, content, onConfir
 
     const alert = (
         <div className="items-center px-4 py-3">
-            <button className="px-4 py-2 bg-primary1 text-white rounded-md w-full" onClick={onConfirm}>{confirmTxt}</button>
+            <button className="px-4 py-2 bg-primary1 text-white rounded-md w-full" onClick={onCancel}>{closeTxt}</button>
         </div>
     )
 

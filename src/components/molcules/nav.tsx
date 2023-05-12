@@ -1,8 +1,7 @@
 import NavMenu from '@atoms/navMenu'
+import { useNavOpenState } from 'context/hooks'
 import Image from 'next/image'
-import { NavContext } from 'context/contexts'
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
 
 interface NavMenu {
   id: number
@@ -12,16 +11,17 @@ interface NavMenu {
 
 const Nav = () => {
   const route = useRouter()
-  const isOpened = useContext(NavContext)
+  const [isNavOpened, setIsNavOpened] = useNavOpenState()
 
   const movePage = (link: string) => {
     route.push(link)
+    setIsNavOpened(false)
   }
 
   return (
     <div
-      className={`fixed bg-white w-full h-full ${
-        isOpened ? 'visible' : 'invisible'
+      className={`fixed bg-white w-full h-full z-10 ${
+        isNavOpened ? 'visible' : 'invisible'
       }`}
     >
       {NAV_DATA.map((nav: NavMenu) => {
@@ -79,7 +79,7 @@ const Nav = () => {
 //   { id: 1, name: '사이드 프로젝트', link: '/' },
 // ] // 미로그인
 const NAV_DATA = [
-  { id: 2, name: `유저 ID`, link: '/' },
+  { id: 2, name: `유저 ID`, link: '/user' },
   { id: 3, name: '사이드 프로젝트', link: '/' },
   { id: 4, name: '로그아웃', link: '/' },
 ] // 로그인

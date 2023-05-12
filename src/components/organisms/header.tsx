@@ -1,16 +1,15 @@
-import { useState, useMemo } from 'react'
 import Nav from '@molecules/nav'
 import Image from 'next/image'
-import { NavContext } from 'context/contexts'
+import { useNavOpenState } from 'context/hooks'
 
 const Header = () => {
-  const [isNavOpened, setIsNavOpened] = useState(false)
+  const [isNavOpened, setIsNavOpened] = useNavOpenState()
 
   return (
-    <NavContext.Provider value={isNavOpened}>
-      <div className="h-20 p-5 shadow-md flex justify-between items-center z-10 relative">
+    <>
+      <div className="h-20 p-5 shadow-md flex justify-between items-center z-20 relative">
         <Image
-          src="/images/sohotco-logo.png"
+          src="/images/sohotco-logo-02.png"
           alt="logo"
           width={44}
           height={44}
@@ -25,7 +24,7 @@ const Header = () => {
         </div>
       </div>
       <Nav />
-    </NavContext.Provider>
+    </>
   )
 }
 

@@ -1,3 +1,5 @@
-import { createContext } from 'react'
+import { createContext, Dispatch, SetStateAction } from 'react'
 
-export const NavContext = createContext<null | boolean>(null)
+export const NavContext = createContext<
+  [boolean, Dispatch<SetStateAction<boolean>>]
+>([false, () => {}])

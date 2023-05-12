@@ -20,7 +20,7 @@ const LinedInput: React.FC<Props> = ({
       onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
-      className="h-13 w-full px-2 py-4 border-b disabled:border-gray1 border-blackt ext-base/[17px] !outline-none"
+      className="h-13 w-full px-2 py-4 border-b disabled:border-gray1 border-black text-base/[17px] !outline-none"
     />
   )
 }

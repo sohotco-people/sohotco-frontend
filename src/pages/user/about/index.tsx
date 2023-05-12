@@ -3,7 +3,7 @@ import LinedInput from '@atoms/linedInput'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import { useState } from 'react'
 
-const UserIntro = () => {
+const UserAbout = () => {
   const [nick, setNick] = useState('')
   const [link, setLink] = useState('')
 
@@ -47,4 +47,4 @@ const UserIntro = () => {
   )
 }
 
-export default UserIntro
+export default UserAbout

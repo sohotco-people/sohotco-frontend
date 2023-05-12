@@ -1,4 +1,5 @@
 import NavMenu from '@atoms/navMenu'
+import Image from 'next/image'
 import { NavContext } from 'context/contexts'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
@@ -24,16 +25,50 @@ const Nav = () => {
       }`}
     >
       {NAV_DATA.map((nav: NavMenu) => {
-        return (
-          <NavMenu
-            key={nav.id}
-            onClick={() => {
-              movePage(nav.link)
-            }}
-          >
-            {nav.name}
-          </NavMenu>
-        )
+        if (nav.id === 2) {
+          return (
+            <>
+              <NavMenu
+                key={nav.id}
+                onClick={() => {
+                  movePage(nav.link)
+                }}
+              >
+                {nav.name}
+              </NavMenu>
+              {SUB_NAV_DATA.map((nav: NavMenu) => {
+                return (
+                  <NavMenu
+                    key={nav.id}
+                    onClick={() => {
+                      movePage(nav.link)
+                    }}
+                  >
+                    <Image
+                      src="/images/navArrow.png"
+                      alt="menu arrow"
+                      width={13}
+                      height={13}
+                      style={{ marginRight: 15 }}
+                    />
+                    {nav.name}
+                  </NavMenu>
+                )
+              })}
+            </>
+          )
+        } else {
+          return (
+            <NavMenu
+              key={nav.id}
+              onClick={() => {
+                movePage(nav.link)
+              }}
+            >
+              {nav.name}
+            </NavMenu>
+          )
+        }
       })}
     </div>
   )
@@ -44,11 +79,14 @@ const Nav = () => {
 //   { id: 1, name: '사이드 프로젝트', link: '/' },
 // ] // 미로그인
 const NAV_DATA = [
-  { id: 2, name: '내 프로필', link: '/' },
-  { id: 3, name: '받은 제안', link: '/' },
-  { id: 4, name: '사이드 프로젝트', link: '/' },
-  { id: 5, name: '프로젝트 생성', link: '/' },
-  { id: 6, name: '로그아웃', link: '/' },
+  { id: 2, name: `유저 ID`, link: '/' },
+  { id: 3, name: '사이드 프로젝트', link: '/' },
+  { id: 4, name: '로그아웃', link: '/' },
 ] // 로그인
+const SUB_NAV_DATA = [
+  { id: 2.1, name: '내 소식', link: '/' },
+  { id: 2.2, name: '내 프로젝트', link: '/' }, // or 프로젝트 생성(프로젝트 없을 시)
+  { id: 2.3, name: '팀원 찾기', link: '/' },
+]
 
 export default Nav

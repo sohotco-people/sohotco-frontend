@@ -6,7 +6,7 @@ import MeetingSystemRadios from "@molecules/meetingSystemRadios"
 import { ModalsDispatchContext } from "context/contexts"
 import { useRouter } from "next/router"
 
-const MeetingType = () => {
+const MeetingSystem = () => {
     const [meetType, setMeetType] = useState('')
     const [location, setLocation] = useState<string[]>([])
     const { openModal } = useContext(ModalsDispatchContext)
@@ -93,4 +93,4 @@ const MeetingType = () => {
     )
 }
 
-export default MeetingType
+export default MeetingSystem

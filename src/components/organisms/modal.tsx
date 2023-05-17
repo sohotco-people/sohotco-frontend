@@ -1,50 +1,47 @@
-import { MouseEventHandler } from "react"
+import SquareBtn from "@atoms/squareBtn"
+import { ModalsDispatchContext, ModalsStateContext } from "context/contexts"
+import { useContext } from "react"
 
-interface Props {
-    show: boolean
-    type?: string
-    title?: string
-    content: string
-    onConfirm: MouseEventHandler
-    onCancel: MouseEventHandler
-    confirmTxt?: string
-    closeTxt?: string
-}
+const Modal = () => {
 
-const Modal: React.FC<Props> = ({ show, type = 'alert', title, content, onConfirm, onCancel, confirmTxt = '확인', closeTxt = '나가기' }) => {
+    const openedModals = useContext(ModalsStateContext)
+    const { closeModal } = useContext(ModalsDispatchContext)
 
-    const confirm = (
-        <div className="items-center px-4 py-3 grid grid-cols-2 gap-2">
-            <button className="px-4 py-2 bg-gray4 text-black font-medium rounded-md" onClick={onCancel}>{closeTxt}</button>
-            <button className="px-4 py-2 bg-primary1 text-white font-medium rounded-md" onClick={onConfirm}>{confirmTxt}</button>
-        </div>
-    )
+    const modals = openedModals.map((modal) => {
+        const { id, type, title, content, confirm } = modal
 
-    const alert = (
-        <div className="items-center px-4 py-3">
-            <button className="px-4 py-2 bg-primary1 text-white rounded-md w-full" onClick={onCancel}>{closeTxt}</button>
-        </div>
-    )
+        const onConfirm = (
+            <div className="grid grid-cols-2">
+                <SquareBtn type={"grey"} onClick={() => { closeModal(modal) }}>나가기</SquareBtn>
+                <SquareBtn type={"point"} onClick={confirm}>확인</SquareBtn>
+            </div>
+        )
 
-    if (show) { } else {
-        return (null)
-    }
+        const onAlert = (
+            <div className="grid grid-cols-1">
+                <SquareBtn type={"point"} onClick={() => { closeModal(modal) }}>나가기</SquareBtn>
+            </div>
+        )
 
-    return (
-        <div className="fixed top-0 left-0 w-full h-full overflow-x-hidden overflow-y-auto">
-            <div className="absolute w-full h-full bg-gray-300 opacity-50"></div>
-            <div className="relative top-20 mx-auto p-5 border w-80 md:w-96 lg:w-96 shadow-lg rounded-md bg-white">
-                <button className="absolute top-5 right-5 w-6 h-6 bg-contain bg-center bg-no-repeat bg-[url('/images/x.png')]" onClick={onCancel}></button>
-                <div className="mt-3 text-center">
-                    <h3 className="text-lg text-gray-900">{title}</h3>
-                    <div className="mt-3 px-7 py-3">
-                        <p className="text-sm text-gray-500">{content}</p>
+        return (
+            <div key={id} className="fixed top-0 left-0 right-0 bottom-0 m-auto z-30 flex justify-center items-center">
+                <div className="relative w-full h-full bg-slate-700 opacity-50"></div>
+
+                <div className="absolute border-inherit w-[250px] rounded-2xl overflow-hidden bg-white">
+                    <button className="absolute top-2.5 right-2.5 w-6 h-6 bg-contain bg-center bg-no-repeat bg-[url('/images/x.png')]" onClick={() => { closeModal(modal) }}></button>
+                    <div className="px-5 py-[50px] text-center">
+                        <h3 className="text-lg text-gray-900">{title}</h3>
+                        <div>
+                            <p className="whitespace-pre-line text-sm font-medium text-black-500">{content}</p>
+                        </div>
                     </div>
-                    {type == 'confirm' ? confirm : alert}
+                    {type == 'confirm' ? onConfirm : onAlert}
                 </div>
             </div>
-        </div>
-    )
+        )
+    })
+
+    return (<>{modals}</>)
 }
 
 export default Modal

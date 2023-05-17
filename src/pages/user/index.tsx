@@ -40,7 +40,7 @@ const DATA = [
   { id: 1, title: '자기소개', link: '/intro' },
   { id: 2, title: '내 역할', link: '/position' },
   { id: 3, title: '내 경력', link: '/experience' },
-  { id: 4, title: '회의 방식', link: '/metteingSystem' },
+  { id: 4, title: '회의 방식', link: '/meetingSystem' },
   { id: 5, title: '회의 일정', link: '/meetingTime' },
 ]
 

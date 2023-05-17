@@ -2,7 +2,7 @@ import 'styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Inter } from 'next/font/google'
 import Header from '@organisms/header'
-import { NavProvider } from 'context/provider'
+import { ModalsProvider, NavProvider } from 'context/provider'
 
 const inter = Inter({ subsets: ['latin'], variable: '--inter' })
 
@@ -12,7 +12,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <NavProvider>
         <Header />
       </NavProvider>
-      <Component {...pageProps} />
+      <ModalsProvider>
+        <Component {...pageProps} />
+      </ModalsProvider>
     </div>
   )
 }

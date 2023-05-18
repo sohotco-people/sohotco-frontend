@@ -15,10 +15,6 @@ const Experience = () => {
         const target = e.target as HTMLInputElement
 
         let val = target.value
-        if (val == 'online') {
-            setExperience([])
-        }
-
         setExperience([val])
     }
 
@@ -31,7 +27,7 @@ const Experience = () => {
 
         if (txt) {
             const modalobj = {
-                id: 'modal-meetingType',
+                id: 'modal-experience',
                 content: txt,
                 confirm: () => { },
             }

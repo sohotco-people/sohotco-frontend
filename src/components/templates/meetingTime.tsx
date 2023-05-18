@@ -1,3 +1,4 @@
+import Divider from "@atoms/Divider"
 import Layout from "@atoms/layout"
 import ButtonGroupPercent from "@molecules/buttonGroupPercent"
 import TimeRadios from "@molecules/timeRadios"
@@ -69,6 +70,7 @@ const MeetingTime = () => {
         <Layout>
             <h1 className="font-bold mb-10">원하는 회의 요일과 시간을 선택해 주세요.</h1>
             <WeekChecks onChange={handleChecks} />
+            <Divider />
             <h1 className="font-bold mb-10">오프라인 위치를 선택해 주세요.</h1>
             <TimeRadios onChange={handleRadios} />
             <ButtonGroupPercent leftBtnClick={cancel} rightBtnClick={save} />

@@ -1,14 +1,27 @@
 import Layout from '@atoms/layout'
 import LinedInput from '@atoms/linedInput'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
+import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { Type_User } from 'types/Types'
 
-const UserAbout = () => {
+interface Props {
+  data: Type_User
+}
+
+const UserAbout = ({ data }: Props) => {
   const route = useRouter()
+  const { openModal } = useContext(ModalsDispatchContext)
 
   const [nick, setNick] = useState('')
   const [link, setLink] = useState('')
+
+  useEffect(() => {
+    if (data.name) {
+      setNick(data.name)
+    }
+  }, [data.name])
 
   const changeNickVal = (val: string) => {
     setNick(val)
@@ -16,6 +29,29 @@ const UserAbout = () => {
 
   const changeLinkVal = (val: string) => {
     setLink(val)
+  }
+
+  const checkValidation = () => {
+    let text = ''
+    const regex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/
+
+    if (nick === '') {
+      text = '닉네임을 입력하세요.'
+    } else if (!regex.test(nick)) {
+      text = '한글/영문/숫자만 가능합니다.'
+    }
+
+    if (text === '') {
+      // 저장
+    } else {
+      const modalObj = {
+        id: 'modal-about',
+        content: text,
+        confirm: clickSaveBtn,
+      }
+
+      openModal(modalObj)
+    }
   }
 
   const clickCancelBtn = () => {
@@ -48,10 +84,33 @@ const UserAbout = () => {
       </Layout>
       <ButtonGroupPercent
         leftBtnClick={clickCancelBtn}
-        rightBtnClick={clickSaveBtn}
+        rightBtnClick={checkValidation}
       />
     </>
   )
 }
 
 export default UserAbout
+
+export async function getStaticProps() {
+  const data = {
+    id: 1,
+    name: 'name',
+    link: '/link',
+    intro: 'introduction',
+    positions: [{ id: 1, name: 'gn' }],
+    experiences: [{ id: 1, name: 'gn' }],
+    meetingLocations: [{ id: 1, name: 'gn' }],
+    meetingWeeks: [{ id: 1, name: 'gn' }],
+    meetingSystems: [{ id: 1, name: 'gn' }],
+    meetingTimes: [{ id: 1, name: 'gn' }],
+    createdAt: '2023-05-17',
+    deletedAt: '2023-05-17',
+  }
+
+  return {
+    props: {
+      data,
+    },
+  }
+}

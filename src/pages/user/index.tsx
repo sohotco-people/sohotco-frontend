@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@atoms/layout'
 import Panel from '@atoms/panel'
 import { Type_User } from 'types/Types'
-import { fetchGet } from 'util/fetch'
+import { ModalsDispatchContext } from 'context/contexts'
 
 interface Props {
   data: Type_User
@@ -11,6 +11,7 @@ interface Props {
 
 const MyProfile = ({ data }: Props) => {
   const route = useRouter()
+  const { openModal } = useContext(ModalsDispatchContext)
 
   const [percent, setPercent] = useState(0)
 
@@ -27,6 +28,19 @@ const MyProfile = ({ data }: Props) => {
 
   const movePage = (link: string) => {
     route.push(link)
+  }
+
+  const deleteProfile = () => {}
+
+  const openDeleteModal = () => {
+    const modalObj = {
+      id: 'modal-deleteProfile',
+      content: '회원정보를 복구할 수 없습니다. 정말로 삭제하시겠습니까?',
+      confirm: deleteProfile,
+      type: 'confirm',
+    }
+
+    openModal(modalObj)
   }
 
   return (
@@ -52,7 +66,7 @@ const MyProfile = ({ data }: Props) => {
         })}
       </div>
       <div className="flex justify-center mt-10 text-gray1 hover:cursor-pointer">
-        <button>계정 삭제</button>
+        <button onClick={openDeleteModal}>계정 삭제</button>
       </div>
     </Layout>
   )
@@ -72,9 +86,9 @@ export default MyProfile
 export async function getStaticProps() {
   const data = {
     id: 1,
-    name: 'ㅁㄴㅇㄹ',
+    name: 'name',
     link: '/link',
-    intro: 'asdf',
+    intro: 'introduction',
     positions: [{ id: 1, name: 'gn' }],
     experiences: [{ id: 1, name: 'gn' }],
     meetingLocations: [{ id: 1, name: 'gn' }],

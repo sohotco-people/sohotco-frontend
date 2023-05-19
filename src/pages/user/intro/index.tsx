@@ -1,18 +1,49 @@
 import Layout from '@atoms/layout'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
+import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { Type_User } from 'types/Types'
 
-const UserIntro = () => {
+interface Props {
+  data: Type_User
+}
+
+const UserIntro = ({ data }: Props) => {
   const route = useRouter()
+  const { openModal, closeModal } = useContext(ModalsDispatchContext)
 
   const [introText, setIntroText] = useState<string>()
+
+  useEffect(() => {
+    if (data.intro) {
+      setIntroText(data.intro)
+    }
+  }, [data.intro])
 
   const writeIntro = (text: string) => {
     setIntroText(text)
   }
 
+  const openExitModal = () => {
+    const modalObj = {
+      id: 'modal-introCancel',
+      content: '내용이 저장되지 않았습니다. 그래도 나가시겠습니까?',
+      confirm: clickCancelBtn,
+      type: 'confirm',
+    }
+
+    openModal(modalObj)
+  }
+
   const clickCancelBtn = () => {
+    const modalObj = {
+      id: 'modal-introCancel',
+      content: '내용이 저장되지 않았습니다. 그래도 나가시겠습니까?',
+      confirm: clickCancelBtn,
+      type: 'confirm',
+    }
+    closeModal(modalObj)
     route.push('/user')
   }
 
@@ -32,7 +63,7 @@ const UserIntro = () => {
         />
       </Layout>
       <ButtonGroupPercent
-        leftBtnClick={clickCancelBtn}
+        leftBtnClick={openExitModal}
         rightBtnClick={clickSaveBtn}
       />
     </>
@@ -40,3 +71,26 @@ const UserIntro = () => {
 }
 
 export default UserIntro
+
+export async function getStaticProps() {
+  const data = {
+    id: 1,
+    name: 'name',
+    link: '/link',
+    intro: 'introduction',
+    positions: [{ id: 1, name: 'gn' }],
+    experiences: [{ id: 1, name: 'gn' }],
+    meetingLocations: [{ id: 1, name: 'gn' }],
+    meetingWeeks: [{ id: 1, name: 'gn' }],
+    meetingSystems: [{ id: 1, name: 'gn' }],
+    meetingTimes: [{ id: 1, name: 'gn' }],
+    createdAt: '2023-05-17',
+    deletedAt: '2023-05-17',
+  }
+
+  return {
+    props: {
+      data,
+    },
+  }
+}

@@ -1,9 +1,12 @@
 import Layout from '@atoms/layout'
 import LinedInput from '@atoms/linedInput'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 const UserAbout = () => {
+  const route = useRouter()
+
   const [nick, setNick] = useState('')
   const [link, setLink] = useState('')
 
@@ -15,7 +18,9 @@ const UserAbout = () => {
     setLink(val)
   }
 
-  const clickCancelBtn = () => {}
+  const clickCancelBtn = () => {
+    route.push('/user')
+  }
 
   const clickSaveBtn = () => {}
 
@@ -23,7 +28,9 @@ const UserAbout = () => {
     <>
       <Layout>
         <div className="flex items-center">
-          <span className="w-2/5">닉네임*</span>
+          <span className="w-2/5">
+            닉네임<span className="text-primary1">*</span>
+          </span>
           <LinedInput
             text={nick}
             onChange={e => changeNickVal(e.target.value)}

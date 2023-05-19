@@ -1,9 +1,29 @@
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Layout from '@atoms/layout'
 import Panel from '@atoms/panel'
-import { useRouter } from 'next/router'
+import { Type_User } from 'types/Types'
+import { fetchGet } from 'util/fetch'
 
-const MyProfile = () => {
+interface Props {
+  data: Type_User
+}
+
+const MyProfile = ({ data }: Props) => {
   const route = useRouter()
+
+  const [percent, setPercent] = useState(0)
+
+  useEffect(() => {
+    let cnt = 0
+    if (data.name) cnt++
+    if (data.intro) cnt++
+    if (data.meetingSystems.length > 0) cnt++
+    if (data.meetingWeeks.length > 0) cnt++
+    if (data.positions.length > 0) cnt++
+    if (data.experiences.length > 0) cnt++
+    setPercent(cnt)
+  }, [data])
 
   const movePage = (link: string) => {
     route.push(link)
@@ -13,10 +33,13 @@ const MyProfile = () => {
     <Layout>
       <div>
         <p className="font-semibold pb-2.5 leading-none">
-          프로필 공개까지 0% 남았습니다.
+          프로필 공개까지 {100 - Math.floor((100 / 6) * percent)}% 남았습니다.
         </p>
-        <div className="relative h-2.5 bg-gray2">
-          <div className={`absolute h-2.5 w-3/12 bg-primary1`} />
+        <div className="relative h-2.5 w-full bg-gray2">
+          <div
+            className={`absolute h-2.5 bg-primary1`}
+            style={{ width: `${percent * (100 / 6)}%` }}
+          />
         </div>
       </div>
       <div className="flex flex-col pt-10 gap-5">
@@ -45,3 +68,26 @@ const DATA = [
 ]
 
 export default MyProfile
+
+export async function getStaticProps() {
+  const data = {
+    id: 1,
+    name: 'ㅁㄴㅇㄹ',
+    link: '/link',
+    intro: 'asdf',
+    positions: [{ id: 1, name: 'gn' }],
+    experiences: [{ id: 1, name: 'gn' }],
+    meetingLocations: [{ id: 1, name: 'gn' }],
+    meetingWeeks: [{ id: 1, name: 'gn' }],
+    meetingSystems: [{ id: 1, name: 'gn' }],
+    meetingTimes: [{ id: 1, name: 'gn' }],
+    createdAt: '2023-05-17',
+    deletedAt: '2023-05-17',
+  }
+
+  return {
+    props: {
+      data,
+    },
+  }
+}

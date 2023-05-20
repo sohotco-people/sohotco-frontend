@@ -10,10 +10,17 @@ const Modal = () => {
     const modals = openedModals.map((modal) => {
         const { id, type, title, content, confirm } = modal
 
+        const confirmBtn = () => {
+            if (confirm) {
+                confirm()
+            }
+            closeModal(modal)
+        }
+
         const onConfirm = (
             <div className="grid grid-cols-2">
                 <SquareBtn type={"grey"} onClick={() => { closeModal(modal) }}>나가기</SquareBtn>
-                <SquareBtn type={"point"} onClick={confirm}>확인</SquareBtn>
+                <SquareBtn type={"point"} onClick={confirmBtn}>확인</SquareBtn>
             </div>
         )
 

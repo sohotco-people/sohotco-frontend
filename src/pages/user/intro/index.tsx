@@ -1,4 +1,5 @@
 import Layout from '@atoms/layout'
+import Textarea from '@atoms/textarea'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
@@ -13,7 +14,7 @@ const UserIntro = ({ data }: Props) => {
   const route = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
 
-  const [introText, setIntroText] = useState<string>()
+  const [introText, setIntroText] = useState<string>('')
 
   useEffect(() => {
     if (data.intro) {
@@ -48,11 +49,10 @@ const UserIntro = ({ data }: Props) => {
         <p className="text-lg font-medium leading-6">
           자기소개를 입력해주세요.
         </p>
-        <textarea
-          placeholder="정성스럽게 작성할수록 기회가 많아져요"
-          value={introText}
+        <Textarea
+          text={introText}
           onChange={e => writeIntro(e.target.value)}
-          className="w-full h-52 mt-10 p-4 border border-gray1 focus:border-black rounded-lg resize-none focus:outline-none"
+          placeholder="정성스럽게 작성할수록 기회가 많아져요."
         />
       </Layout>
       <ButtonGroupPercent

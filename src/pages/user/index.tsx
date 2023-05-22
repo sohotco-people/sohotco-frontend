@@ -46,9 +46,15 @@ const MyProfile = ({ data }: Props) => {
   return (
     <Layout>
       <div>
-        <p className="font-semibold pb-2.5 leading-none">
-          프로필 공개까지 {100 - Math.floor((100 / 6) * percent)}% 남았습니다.
-        </p>
+        {percent === 6 ? (
+          <p className="font-semibold pb-2.5 leading-none text-primary1">
+            프로필 공개중
+          </p>
+        ) : (
+          <p className="font-semibold pb-2.5 leading-none">
+            프로필 공개까지 {100 - Math.floor((100 / 6) * percent)}% 남았습니다.
+          </p>
+        )}
         <div className="relative h-2.5 w-full bg-gray2">
           <div
             className={`absolute h-2.5 bg-primary1`}

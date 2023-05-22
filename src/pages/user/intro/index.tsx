@@ -11,7 +11,7 @@ interface Props {
 
 const UserIntro = ({ data }: Props) => {
   const route = useRouter()
-  const { openModal, closeModal } = useContext(ModalsDispatchContext)
+  const { openModal } = useContext(ModalsDispatchContext)
 
   const [introText, setIntroText] = useState<string>()
 
@@ -37,13 +37,6 @@ const UserIntro = ({ data }: Props) => {
   }
 
   const clickCancelBtn = () => {
-    const modalObj = {
-      id: 'modal-introCancel',
-      content: '내용이 저장되지 않았습니다. 그래도 나가시겠습니까?',
-      confirm: clickCancelBtn,
-      type: 'confirm',
-    }
-    closeModal(modalObj)
     route.push('/user')
   }
 

@@ -2,6 +2,7 @@ import NavMenu from '@atoms/navMenu'
 import { useNavOpenState } from 'context/hooks'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { Fragment } from 'react'
 
 interface NavMenu {
   id: number
@@ -27,9 +28,8 @@ const Nav = () => {
       {NAV_DATA.map((nav: NavMenu) => {
         if (nav.id === 2) {
           return (
-            <>
+            <Fragment key={nav.id}>
               <NavMenu
-                key={nav.id}
                 onClick={() => {
                   movePage(nav.link)
                 }}
@@ -55,7 +55,7 @@ const Nav = () => {
                   </NavMenu>
                 )
               })}
-            </>
+            </Fragment>
           )
         } else {
           return (

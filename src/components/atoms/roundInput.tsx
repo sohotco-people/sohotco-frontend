@@ -20,7 +20,7 @@ const RoundInput: React.FC<Props> = ({
       onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
-      className="h-13 w-full p-4 border disabled:border-gray1 border-black rounded-lg text-base/[17px] !outline-none"
+      className="h-13 w-full p-4 border border-gray1 focus:border-black rounded-lg text-base/[17px] !outline-none"
     />
   )
 }

@@ -6,7 +6,7 @@ interface Props {
 const Panel: React.FC<Props> = ({ onClick, children }) => {
   return (
     <div
-      className="px-4 py-4.5 bg-gray4 flex justify-between items-center hover:cursor-pointer"
+      className="px-4 py-4.5 bg-gray4 flex justify-between items-center border border-gray2 rounded  hover:cursor-pointer"
       onClick={onClick}
     >
       <span className="text-base/[19px] font-medium">{children}</span>

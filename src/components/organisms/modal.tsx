@@ -8,18 +8,28 @@ const Modal = () => {
     const { closeModal } = useContext(ModalsDispatchContext)
 
     const modals = openedModals.map((modal) => {
-        const { id, type, title, content, confirm } = modal
+        let { id, type, title, content, confirm, confirmTxt, cancelTxt } = modal
+
+        confirmTxt = confirmTxt || "확인"
+        cancelTxt = cancelTxt || "취소"
+
+        const confirmBtn = () => {
+            if (confirm) {
+                confirm()
+            }
+            closeModal(modal)
+        }
 
         const onConfirm = (
             <div className="grid grid-cols-2">
-                <SquareBtn type={"grey"} onClick={() => { closeModal(modal) }}>나가기</SquareBtn>
-                <SquareBtn type={"point"} onClick={confirm}>확인</SquareBtn>
+                <SquareBtn type={"grey"} onClick={() => { closeModal(modal) }}>{cancelTxt}</SquareBtn>
+                <SquareBtn type={"point"} onClick={confirmBtn}>{confirmTxt}</SquareBtn>
             </div>
         )
 
         const onAlert = (
             <div className="grid grid-cols-1">
-                <SquareBtn type={"point"} onClick={() => { closeModal(modal) }}>나가기</SquareBtn>
+                <SquareBtn type={"point"} onClick={() => { closeModal(modal) }}>{cancelTxt}</SquareBtn>
             </div>
         )
 

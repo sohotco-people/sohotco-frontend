@@ -25,7 +25,6 @@ const Login = () => {
 
     try {
       const res = await fetch(URL + QUERY, option)
-      // api 호출하여 후처리
       return res
     } catch (e) {
       console.log('kakao login error', e)

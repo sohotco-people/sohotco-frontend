@@ -5,6 +5,7 @@ import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Type_User } from 'types/Types'
+import { fetchPut } from 'util/fetch'
 
 interface Props {
   data: Type_User
@@ -42,7 +43,7 @@ const UserAbout = ({ data }: Props) => {
     }
 
     if (text === '') {
-      // 저장
+      clickSaveBtn()
     } else {
       const modalObj = {
         id: 'modal-about',
@@ -58,7 +59,28 @@ const UserAbout = ({ data }: Props) => {
     route.push('/user')
   }
 
-  const clickSaveBtn = () => {}
+  const clickSaveBtn = async () => {
+    if (nick.length > 0) {
+      const path = '/user/me'
+      let params: { name: string; link?: string } = {
+        name: nick,
+      }
+
+      if (link) {
+        params.link = link
+      }
+
+      const res = await fetchPut(path, params)
+      if (res.code === 200) {
+        const modalObj = {
+          id: 'modal-about',
+          content: '성공적으로 업데이트를 완료하였습니다.',
+        }
+
+        openModal(modalObj)
+      }
+    }
+  }
 
   return (
     <>

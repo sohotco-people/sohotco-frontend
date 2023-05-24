@@ -1,4 +1,4 @@
-const baseurl = 'http://localhost:8080'
+const baseurl = 'http://13.124.128.55:8080'
 
 export const fetchGet = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path + '?' + new URLSearchParams(params).toString()
@@ -19,6 +19,25 @@ export const fetchPost = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
   const option = {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    body: JSON.stringify(params),
+  }
+
+  try {
+    const res = await fetch(url, option)
+    return res.json()
+  } catch (e) {
+    console.log('error: ', e)
+  }
+}
+
+export const fetchPut = async (path: string, params = {}, headers = {}) => {
+  const url = baseurl + path
+  const option = {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       ...headers,

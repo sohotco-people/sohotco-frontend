@@ -5,6 +5,7 @@ import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Type_User } from 'types/Types'
+import { fetchPut } from 'util/fetch'
 
 interface Props {
   data: Type_User
@@ -22,8 +23,37 @@ const UserIntro = ({ data }: Props) => {
     }
   }, [data.intro])
 
+  useEffect(() => {
+    if (introText.length > 0) {
+      // 뒤로가기 방지
+      route.beforePopState(({ url, as, options }) => {
+        if (as !== route.asPath) {
+          openExitModal()
+          window.history.pushState('', '')
+          route.push(route.asPath)
+          return false
+        }
+
+        return true
+      })
+
+      // 새로고침 방지
+      window.addEventListener('beforeunload', handleBeforeUnload)
+    }
+
+    return () => {
+      route.beforePopState(() => true)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [introText])
+
   const writeIntro = (text: string) => {
     setIntroText(text)
+  }
+
+  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    e.preventDefault()
+    e.returnValue = ''
   }
 
   const openExitModal = () => {
@@ -32,6 +62,7 @@ const UserIntro = ({ data }: Props) => {
       content: '내용이 저장되지 않았습니다. 그래도 나가시겠습니까?',
       confirm: clickCancelBtn,
       type: 'confirm',
+      confirmTxt: '나가기',
     }
 
     openModal(modalObj)
@@ -41,7 +72,24 @@ const UserIntro = ({ data }: Props) => {
     route.push('/user')
   }
 
-  const clickSaveBtn = () => {}
+  const clickSaveBtn = async () => {
+    if (introText.length > 0) {
+      const path = '/user/me'
+      const params = {
+        intro: introText,
+      }
+
+      const res = await fetchPut(path, params)
+      if (res.code === 200) {
+        const modalObj = {
+          id: 'modal-intro',
+          content: '성공적으로 업데이트를 완료하였습니다.',
+        }
+
+        openModal(modalObj)
+      }
+    }
+  }
 
   return (
     <>

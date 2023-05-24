@@ -2,7 +2,7 @@ import NavMenu from '@atoms/navMenu'
 import { useNavOpenState } from 'context/hooks'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 interface NavMenu {
   id: number
@@ -14,6 +14,14 @@ const Nav = () => {
   const route = useRouter()
   const [isNavOpened, setIsNavOpened] = useNavOpenState()
 
+  useEffect(() => {
+    if (isNavOpened) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isNavOpened])
+
   const movePage = (link: string) => {
     route.push(link)
     setIsNavOpened(false)
@@ -21,7 +29,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`fixed bg-white w-full h-full z-10 ${
+      className={`fixed top-20 bg-white w-full h-full z-10 ${
         isNavOpened ? 'visible' : 'invisible'
       }`}
     >

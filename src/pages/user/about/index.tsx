@@ -40,6 +40,8 @@ const UserAbout = ({ data }: Props) => {
       text = '닉네임을 입력하세요.'
     } else if (!regex.test(nick)) {
       text = '한글/영문/숫자만 가능합니다.'
+    } else if (!link.includes('http')) {
+      text = '링크가 올바르지 않습니다.'
     }
 
     if (text === '') {

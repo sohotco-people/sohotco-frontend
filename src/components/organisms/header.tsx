@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="h-20 p-5 shadow-md flex justify-between items-center z-20 relative">
+      <div className="sticky top-0 h-20 w-full p-5 bg-white shadow-md flex justify-between items-center z-20 relative">
         <Image
           src="/images/sohotco-logo-02.png"
           alt="logo"

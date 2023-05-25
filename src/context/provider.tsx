@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { ModalsDispatchContext, ModalsStateContext, NavContext } from './contexts'
+import {
+  ModalsDispatchContext,
+  ModalsStateContext,
+  NavContext,
+  NewProjectContext,
+} from './contexts'
+import { Type_NewProject } from 'types/Types'
 
 interface Props {
   children: React.ReactNode
@@ -15,7 +21,7 @@ export const ModalsProvider = ({ children }: Props) => {
   const [openedModals, setOpenedModals] = useState<any[]>([])
 
   const openModal = (props: any) => {
-    setOpenedModals((modals) => {
+    setOpenedModals(modals => {
       return [...modals, props]
     })
   }
@@ -23,7 +29,7 @@ export const ModalsProvider = ({ children }: Props) => {
   const closeModal = (props: any) => {
     const id = props.id
 
-    setOpenedModals((modals) => {
+    setOpenedModals(modals => {
       return modals.filter(modal => modal.id !== id)
     })
   }
@@ -35,5 +41,23 @@ export const ModalsProvider = ({ children }: Props) => {
         {children}
       </ModalsStateContext.Provider>
     </ModalsDispatchContext.Provider>
+  )
+}
+
+export const NewProjectProvider = ({ children }: Props) => {
+  const projectState = useState<Type_NewProject>({
+    title: '',
+    intro: '',
+    meetType: '',
+    location: [],
+    week: [],
+    time: [],
+    position: [],
+  })
+
+  return (
+    <NewProjectContext.Provider value={projectState}>
+      {children}
+    </NewProjectContext.Provider>
   )
 }

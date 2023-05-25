@@ -29,9 +29,8 @@ const Nav = () => {
 
   return (
     <div
-      className={`fixed top-20 bg-white w-full h-full z-10 ${
-        isNavOpened ? 'visible' : 'invisible'
-      }`}
+      className={`fixed top-20 bg-white w-full h-full z-10 ${isNavOpened ? 'visible' : 'invisible'
+        }`}
     >
       {NAV_DATA.map((nav: NavMenu) => {
         if (nav.id === 2) {
@@ -88,7 +87,7 @@ const Nav = () => {
 // ] // 미로그인
 const NAV_DATA = [
   { id: 2, name: `유저 ID`, link: '/user' },
-  { id: 3, name: '사이드 프로젝트', link: '/' },
+  { id: 3, name: '사이드 프로젝트', link: '/project' },
   { id: 4, name: '로그아웃', link: '/' },
 ] // 로그인
 const SUB_NAV_DATA = [

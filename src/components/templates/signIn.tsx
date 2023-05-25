@@ -1,9 +1,15 @@
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 const SignIn = () => {
+  const [current, setCurrent] = useState('')
+
   const redirect = 'http://localhost:8080/login/kakao'
-  const current = window.location.href
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?cliend_id=${process.env.NEXT_PUBLIC_APP_KAKAO_KEY}&redirect_uri=${redirect}&response_type=code&state=${current}`
+
+  useEffect(() => {
+    setCurrent(window.location.href)
+  }, [])
 
   return (
     <div className="absolute w-full h-full px-5 py-10">

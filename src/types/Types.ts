@@ -18,7 +18,7 @@ export interface Type_Detail {
   name: string
 }
 
-export interface Type_NewProject {
+export interface Type_Project {
   title: string
   intro: string
   meetType: string

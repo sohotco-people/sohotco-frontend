@@ -1,5 +1,3 @@
-'use client'
-
 import Layout from '@atoms/layout'
 import Panel from '@atoms/panel'
 import SubTitle from '@atoms/subTitle'

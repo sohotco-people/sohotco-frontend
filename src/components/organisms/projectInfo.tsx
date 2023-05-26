@@ -1,22 +1,40 @@
 import Layout from "@atoms/layout"
 import ProjectBasicInfo from "@molecules/projectBasicInfo"
 import ProjectContent from "@molecules/projectContent"
+import { Type_Project } from "types/Types"
 
-const ProjectInfo = () => {
-    return (
-        <Layout>
-            <div className="grid gap-[60px]">
-                <div className="grid gap-2.5">
-                    <ProjectBasicInfo title={"재미있는 프로젝트를 같이할 멤버를 구합니다!"} subTexts={["17시간 전"]} />
-                </div>
+interface Props {
+	project: Type_Project
+}
 
-                <ProjectContent title={"회의 방식"} content={"온라인 (마포 또는 서초)"} />
-                <ProjectContent title={"회의 일정"} content={"18시~24시 (월요일 또는 수요일)"} />
-                <ProjectContent title={"모집 역할"} content={"백엔드 ⋅ 프론트엔드 ⋅ 디자이너"} />
-                <ProjectContent title={"프로젝트 소개"} content={"프로젝트를 제안 받은 유저만 볼 수 있어요."} />
-            </div>
-        </Layout>
-    )
+const ProjectInfo: React.FC<Props> = ({ project }) => {
+
+	let { title, intro, meetType, location, week, time, position, createdAt } = project
+
+	let locStr = ''
+	if (location) {
+		locStr = ` (${location.join(' 또는 ')})`
+	}
+
+	let timeStr = ''
+	if (week && time) {
+		timeStr = `${time.join(',')} (${week.join(' 또는 ')})`
+	}
+
+	return (
+		<Layout>
+			<div className="grid gap-[60px]">
+				<div className="grid gap-2.5">
+					<ProjectBasicInfo title={title} subTexts={[createdAt]} />
+				</div>
+
+				<ProjectContent title={"회의 방식"} content={meetType + locStr} />
+				<ProjectContent title={"회의 일정"} content={timeStr} />
+				<ProjectContent title={"모집 역할"} content={position.join(' ⋅ ')} />
+				<ProjectContent title={"프로젝트 소개"} content={intro} />
+			</div>
+		</Layout>
+	)
 }
 
 export default ProjectInfo

@@ -2,8 +2,13 @@ import SquareBtn from '@atoms/squareBtn'
 import ProjectInfo from '@organisms/projectInfo'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useContext, useState } from 'react'
+import { Type_Project } from 'types/Types'
 
-const ProjectDetail = () => {
+interface Props {
+    project: Type_Project
+
+}
+const ProjectDetail: React.FC<Props> = ({ project }) => {
     const { openModal } = useContext(ModalsDispatchContext)
     const [open, setOpen] = useState(true)
 
@@ -29,7 +34,7 @@ const ProjectDetail = () => {
     }
     return (
         <>
-            <ProjectInfo />
+            <ProjectInfo project={project} />
 
             {/* 내 프로젝트 아닐 경우 버튼 가리기 */}
             <div className="fixed inset-x-0 bottom-0">

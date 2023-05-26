@@ -1,8 +1,9 @@
 import ProjectListItem from "@organisms/projectListItem"
 import React from "react"
+import { Type_Project } from "types/Types"
 
 interface Props {
-  list: any[]
+  list: Type_Project[]
   handleClick: Function
 }
 

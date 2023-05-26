@@ -19,7 +19,6 @@ export interface Type_Detail {
 }
 
 export interface Type_Project {
-  id: string
   title: string
   intro: string
   meetType: string
@@ -27,6 +26,4 @@ export interface Type_Project {
   week: string[]
   time: string[]
   position: string[]
-  createdAt: string
-  viewCnt: string
 }

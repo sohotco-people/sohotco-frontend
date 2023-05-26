@@ -1,4 +1,5 @@
 import Layout from '@atoms/layout'
+import SubTitle from '@atoms/subTitle'
 import Textarea from '@atoms/textarea'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import { ModalsDispatchContext } from 'context/contexts'
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const UserIntro = ({ data }: Props) => {
-  const route = useRouter()
+  const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
 
   const [introText, setIntroText] = useState<string>('')
@@ -26,11 +27,11 @@ const UserIntro = ({ data }: Props) => {
   useEffect(() => {
     if (introText.length > 0) {
       // 뒤로가기 방지
-      route.beforePopState(({ url, as, options }) => {
-        if (as !== route.asPath) {
+      router.beforePopState(({ url, as, options }) => {
+        if (as !== router.asPath) {
           openExitModal()
           window.history.pushState('', '')
-          route.push(route.asPath)
+          router.push(router.asPath)
           return false
         }
 
@@ -42,7 +43,7 @@ const UserIntro = ({ data }: Props) => {
     }
 
     return () => {
-      route.beforePopState(() => true)
+      router.beforePopState(() => true)
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [introText])
@@ -69,7 +70,7 @@ const UserIntro = ({ data }: Props) => {
   }
 
   const clickCancelBtn = () => {
-    route.push('/user')
+    router.push('/user')
   }
 
   const clickSaveBtn = async () => {
@@ -94,9 +95,7 @@ const UserIntro = ({ data }: Props) => {
   return (
     <>
       <Layout>
-        <p className="text-lg font-medium leading-6">
-          자기소개를 입력해주세요.
-        </p>
+        <SubTitle className="pb-5">자기소개를 입력해주세요.</SubTitle>
         <Textarea
           text={introText}
           onChange={e => writeIntro(e.target.value)}

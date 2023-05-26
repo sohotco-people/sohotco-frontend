@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import { ModalsDispatchContext, ModalsStateContext, NavContext } from './contexts'
+import {
+  LoginContext,
+  ModalsDispatchContext,
+  ModalsStateContext,
+  NavContext,
+} from './contexts'
 
 interface Props {
   children: React.ReactNode
@@ -15,7 +20,7 @@ export const ModalsProvider = ({ children }: Props) => {
   const [openedModals, setOpenedModals] = useState<any[]>([])
 
   const openModal = (props: any) => {
-    setOpenedModals((modals) => {
+    setOpenedModals(modals => {
       return [...modals, props]
     })
   }
@@ -23,7 +28,7 @@ export const ModalsProvider = ({ children }: Props) => {
   const closeModal = (props: any) => {
     const id = props.id
 
-    setOpenedModals((modals) => {
+    setOpenedModals(modals => {
       return modals.filter(modal => modal.id !== id)
     })
   }
@@ -35,5 +40,13 @@ export const ModalsProvider = ({ children }: Props) => {
         {children}
       </ModalsStateContext.Provider>
     </ModalsDispatchContext.Provider>
+  )
+}
+
+export const LoginProvider = ({ children }: Props) => {
+  const loginState = useState(false)
+
+  return (
+    <LoginContext.Provider value={loginState}>{children}</LoginContext.Provider>
   )
 }

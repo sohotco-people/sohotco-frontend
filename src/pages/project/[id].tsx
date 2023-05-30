@@ -14,7 +14,9 @@ const ProjectInfo = () => {
     time: ['12시~14시'],
     position: ['백엔드', '디자이너'],
     createdAt: '17시간 전',
-    viewCnt: '1234'
+    updatedAt: '',
+    isPublished: false,
+    viewCnt: '234'
   }
 
   return (

@@ -15,7 +15,9 @@ const Project = () => {
     time: [],
     position: [],
     createdAt: "17시간 전",
-    viewCnt: "234"
+    viewCnt: "234",
+    updatedAt: "",
+    isPublished: false
   }
 
   const arr = [obj, obj, obj, obj, obj, obj]

@@ -16,9 +16,9 @@ export const LoginContext = createContext<
   [boolean, Dispatch<SetStateAction<boolean>>]
 >([false, () => { }])
 
-export const LoginOpenContext = createContext({
-  open: false,
-  toggleLogin: (flag: boolean) => { }
+export const SignInContext = createContext({
+  signInPage: false,
+  toggleSignIn: (flag: boolean) => { }
 })
 
 export const NewProjectContext = createContext<

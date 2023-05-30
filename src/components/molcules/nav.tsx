@@ -1,5 +1,5 @@
 import NavMenu from '@atoms/navMenu'
-import { useIsLoginOpenState, useIsLoginState, useNavOpenState } from 'context/hooks'
+import { useSignInState, useIsLoginState, useNavOpenState } from 'context/hooks'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
@@ -14,7 +14,7 @@ const Nav = () => {
   const router = useRouter()
   const [isNavOpened, setIsNavOpened] = useNavOpenState()
   const [isLogin, setIsLogin] = useIsLoginState()
-  const { open, toggleLogin } = useIsLoginOpenState()
+  const { signInPage, toggleSignIn } = useSignInState()
 
   useEffect(() => {
     if (isNavOpened) {
@@ -26,7 +26,7 @@ const Nav = () => {
 
   const movePage = (link: string) => {
     if (link == '/signIn') {
-      toggleLogin(open)
+      toggleSignIn(signInPage)
       return
     }
     router.push(link)

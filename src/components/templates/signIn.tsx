@@ -1,10 +1,10 @@
-import { useIsLoginOpenState } from 'context/hooks'
+import { useSignInState } from 'context/hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 const SignIn = () => {
   const router = useRouter()
-  const { open, toggleLogin } = useIsLoginOpenState()
+  const { signInPage, toggleSignIn } = useSignInState()
 
   const BASE_URL = process.env.NEXT_PUBLIC_APP_BASE_URL
   const redirect = 'http://3.35.244.176:8080/login/oauth'
@@ -12,10 +12,10 @@ const SignIn = () => {
     }&redirect_uri=${redirect}&response_type=code&state=${BASE_URL + router.asPath}`
 
   const handleClose = () => {
-    toggleLogin(open)
+    toggleSignIn(signInPage)
   }
 
-  if (open) {
+  if (signInPage) {
 
   } else {
     return (<></>)

@@ -97,11 +97,11 @@ const Nav = () => {
 
 const NAV_DATA_NOTLOGIN = [
   { id: 0, name: '로그인 ⋅ 회원가입', link: '/signIn' },
-  { id: 1, name: '사이드 프로젝트', link: '/' },
+  { id: 1, name: '사이드 프로젝트', link: '/project' },
 ]
 const NAV_DATA_LOGIN = [
   { id: 2, name: `유저 ID`, link: '/user' },
-  { id: 3, name: '사이드 프로젝트', link: '/' },
+  { id: 3, name: '사이드 프로젝트', link: '/project' },
   { id: 4, name: '로그아웃', link: '/' },
 ]
 const SUB_NAV_DATA = [

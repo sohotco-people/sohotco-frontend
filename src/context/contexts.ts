@@ -25,6 +25,7 @@ export const NewProjectContext = createContext<
   [Type_Project, Dispatch<SetStateAction<Type_Project>>]
 >([
   {
+    id: '',
     title: '',
     intro: '',
     meetType: '',
@@ -32,6 +33,10 @@ export const NewProjectContext = createContext<
     week: [],
     time: [],
     position: [],
+    createdAt: '',
+    updatedAt: '',
+    isPublished: false,
+    viewCnt: ''
   },
   () => { },
 ])

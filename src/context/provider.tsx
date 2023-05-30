@@ -65,6 +65,7 @@ export const LoginProvider = ({ children }: Props) => {
 
 export const NewProjectProvider = ({ children }: Props) => {
   const projectState = useState<Type_Project>({
+    id: '',
     title: '',
     intro: '',
     meetType: '',
@@ -72,6 +73,10 @@ export const NewProjectProvider = ({ children }: Props) => {
     week: [],
     time: [],
     position: [],
+    createdAt: '',
+    updatedAt: '',
+    isPublished: false,
+    viewCnt: '',
   })
 
   return (

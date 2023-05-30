@@ -1,5 +1,5 @@
 import NavMenu from '@atoms/navMenu'
-import { useIsLoginState, useNavOpenState } from 'context/hooks'
+import { useSignInState, useIsLoginState, useNavOpenState } from 'context/hooks'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
@@ -14,6 +14,7 @@ const Nav = () => {
   const router = useRouter()
   const [isNavOpened, setIsNavOpened] = useNavOpenState()
   const [isLogin, setIsLogin] = useIsLoginState()
+  const { signInPage, toggleSignIn } = useSignInState()
 
   useEffect(() => {
     if (isNavOpened) {
@@ -24,75 +25,78 @@ const Nav = () => {
   }, [isNavOpened])
 
   const movePage = (link: string) => {
+    if (link == '/signIn') {
+      toggleSignIn(signInPage)
+      return
+    }
     router.push(link)
     setIsNavOpened(false)
   }
 
   return (
     <div
-      className={`fixed top-20 bg-white w-full h-full z-10 ${
-        isNavOpened ? 'visible' : 'invisible'
-      }`}
+      className={`fixed top-20 bg-white w-full h-full z-10 ${isNavOpened ? 'visible' : 'invisible'
+        }`}
     >
       {isLogin
         ? NAV_DATA_LOGIN.map((nav: NavMenu) => {
-            if (nav.id === 2) {
-              return (
-                <Fragment key={nav.id}>
-                  <NavMenu
-                    onClick={() => {
-                      movePage(nav.link)
-                    }}
-                  >
-                    {nav.name}
-                  </NavMenu>
-                  {SUB_NAV_DATA.map((nav: NavMenu) => {
-                    return (
-                      <NavMenu
-                        key={nav.id}
-                        onClick={() => {
-                          movePage(nav.link)
-                        }}
-                      >
-                        <Image
-                          src="/images/navArrow.png"
-                          alt="menu arrow"
-                          width={13}
-                          height={13}
-                          style={{ marginRight: 15 }}
-                        />
-                        {nav.name}
-                      </NavMenu>
-                    )
-                  })}
-                </Fragment>
-              )
-            } else {
-              return (
+          if (nav.id === 2) {
+            return (
+              <Fragment key={nav.id}>
                 <NavMenu
-                  key={nav.id}
                   onClick={() => {
                     movePage(nav.link)
                   }}
                 >
                   {nav.name}
                 </NavMenu>
-              )
-            }
-          })
-        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
+                {SUB_NAV_DATA.map((nav: NavMenu) => {
+                  return (
+                    <NavMenu
+                      key={nav.id}
+                      onClick={() => {
+                        movePage(nav.link)
+                      }}
+                    >
+                      <Image
+                        src="/images/navArrow.png"
+                        alt="menu arrow"
+                        width={13}
+                        height={13}
+                        style={{ marginRight: 15 }}
+                      />
+                      {nav.name}
+                    </NavMenu>
+                  )
+                })}
+              </Fragment>
+            )
+          } else {
             return (
-              <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
+              <NavMenu
+                key={nav.id}
+                onClick={() => {
+                  movePage(nav.link)
+                }}
+              >
                 {nav.name}
               </NavMenu>
             )
-          })}
+          }
+        })
+        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
+          return (
+            <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
+              {nav.name}
+            </NavMenu>
+          )
+        })}
     </div>
   )
 }
 
 const NAV_DATA_NOTLOGIN = [
-  { id: 0, name: '로그인 ⋅ 회원가입', link: '/' },
+  { id: 0, name: '로그인 ⋅ 회원가입', link: '/signIn' },
   { id: 1, name: '사이드 프로젝트', link: '/' },
 ]
 const NAV_DATA_LOGIN = [

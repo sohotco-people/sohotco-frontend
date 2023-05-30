@@ -35,64 +35,64 @@ const Nav = () => {
     >
       {isLogin
         ? NAV_DATA_LOGIN.map((nav: NavMenu) => {
-            if (nav.id === 2) {
-              return (
-                <Fragment key={nav.id}>
-                  <NavMenu
-                    onClick={() => {
-                      movePage(nav.link)
-                    }}
-                  >
-                    {nav.name}
-                  </NavMenu>
-                  {SUB_NAV_DATA.map((nav: NavMenu) => {
-                    return (
-                      <NavMenu
-                        key={nav.id}
-                        onClick={() => {
-                          movePage(nav.link)
-                        }}
-                      >
-                        <Image
-                          src="/images/navArrow.png"
-                          alt="menu arrow"
-                          width={13}
-                          height={13}
-                          style={{ marginRight: 15 }}
-                        />
-                        {nav.name}
-                      </NavMenu>
-                    )
-                  })}
-                </Fragment>
-              )
-            } else {
-              return (
+          if (nav.id === 2) {
+            return (
+              <Fragment key={nav.id}>
                 <NavMenu
-                  key={nav.id}
                   onClick={() => {
                     movePage(nav.link)
                   }}
                 >
                   {nav.name}
                 </NavMenu>
-              )
-            }
-          })
-        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
+                {SUB_NAV_DATA.map((nav: NavMenu) => {
+                  return (
+                    <NavMenu
+                      key={nav.id}
+                      onClick={() => {
+                        movePage(nav.link)
+                      }}
+                    >
+                      <Image
+                        src="/images/navArrow.png"
+                        alt="menu arrow"
+                        width={13}
+                        height={13}
+                        style={{ marginRight: 15 }}
+                      />
+                      {nav.name}
+                    </NavMenu>
+                  )
+                })}
+              </Fragment>
+            )
+          } else {
             return (
-              <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
+              <NavMenu
+                key={nav.id}
+                onClick={() => {
+                  movePage(nav.link)
+                }}
+              >
                 {nav.name}
               </NavMenu>
             )
-          })}
+          }
+        })
+        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
+          return (
+            <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
+              {nav.name}
+            </NavMenu>
+          )
+        })}
     </div>
   )
 }
 
 const NAV_DATA_NOTLOGIN = [
   { id: 0, name: '로그인 ⋅ 회원가입', link: '/' },
-  { id: 1, name: '사이드 프로젝트', link: '/' },
+  { id: 1, name: '사이드 프로젝트', link: '/project' },
 ]
 const NAV_DATA_LOGIN = [
   { id: 2, name: `유저 ID`, link: '/user' },

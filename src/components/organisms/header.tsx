@@ -1,9 +1,38 @@
 import Nav from '@molecules/nav'
 import Image from 'next/image'
-import { useNavOpenState } from 'context/hooks'
+import { useIsLoginState, useNavOpenState } from 'context/hooks'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { createCookie, readCookie } from 'util/cookie'
 
 const Header = () => {
-  const [isNavOpened, setIsNavOpened] = useNavOpenState()
+  const router = useRouter()
+  const { query } = router
+
+  const [, setIsNavOpened] = useNavOpenState()
+  const [, setIsLogin] = useIsLoginState()
+
+  // 로그인 상태 확인 후 쿠키 생성
+  useEffect(() => {
+    if (query.access_token) {
+      const token =
+        typeof query.access_token !== 'string'
+          ? query.access_token[0]
+          : query.access_token
+      createCookie('SOHOTCO_OAUTH', token)
+      router.push(router.pathname)
+      // 팝업 닫기
+    }
+  }, [query, router])
+
+  // 로그인 상태 변경
+  useEffect(() => {
+    const cookie = readCookie('SOHOTCO_OAUTH')
+
+    if (cookie) {
+      setIsLogin(true)
+    }
+  }, [])
 
   return (
     <>

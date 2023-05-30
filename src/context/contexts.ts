@@ -3,18 +3,23 @@ import { Type_Project } from 'types/Types'
 
 export const NavContext = createContext<
   [boolean, Dispatch<SetStateAction<boolean>>]
->([false, () => {}])
+>([false, () => { }])
 
 export const ModalsStateContext = createContext<any[]>([])
 
 export const ModalsDispatchContext = createContext({
-  openModal: (props: object) => {},
-  closeModal: (props: object) => {},
+  openModal: (props: object) => { },
+  closeModal: (props: object) => { },
 })
 
 export const LoginContext = createContext<
   [boolean, Dispatch<SetStateAction<boolean>>]
->([false, () => {}])
+>([false, () => { }])
+
+export const LoginOpenContext = createContext({
+  open: false,
+  toggleLogin: (flag: boolean) => { }
+})
 
 export const NewProjectContext = createContext<
   [Type_Project, Dispatch<SetStateAction<Type_Project>>]
@@ -28,5 +33,5 @@ export const NewProjectContext = createContext<
     time: [],
     position: [],
   },
-  () => {},
+  () => { },
 ])

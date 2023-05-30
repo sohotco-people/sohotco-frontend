@@ -1,15 +1,16 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const SignIn = () => {
-  const [current, setCurrent] = useState('')
+  const router = useRouter()
 
-  const redirect = 'http://localhost:8080/login/kakao'
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?cliend_id=${process.env.NEXT_PUBLIC_APP_KAKAO_KEY}&redirect_uri=${redirect}&response_type=code&state=${current}`
-
-  useEffect(() => {
-    setCurrent(window.location.href)
-  }, [])
+  const BASE_URL = process.env.NEXT_PUBLIC_APP_BASE_URL
+  const redirect = 'http://3.35.244.176:8080/login/oauth'
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${
+    process.env.NEXT_PUBLIC_APP_KAKAO_KEY
+  }&redirect_uri=${redirect}&response_type=code&state=${
+    BASE_URL + router.asPath
+  }`
 
   return (
     <div className="absolute w-full h-full px-5 py-10">

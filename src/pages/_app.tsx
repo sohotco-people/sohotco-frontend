@@ -6,6 +6,7 @@ import {
   ModalsProvider,
   NavProvider,
   NewProjectProvider,
+  LoginProvider,
 } from 'context/provider'
 import Modal from '@organisms/modal'
 
@@ -14,15 +15,17 @@ const inter = Inter({ subsets: ['latin'], variable: '--inter' })
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={`${inter.variable}`}>
-      <NavProvider>
-        <Header />
-      </NavProvider>
-      <ModalsProvider>
-        <NewProjectProvider>
-          <Component {...pageProps} />
-          <Modal />
-        </NewProjectProvider>
-      </ModalsProvider>
+      <LoginProvider>
+        <NavProvider>
+          <Header />
+        </NavProvider>
+        <ModalsProvider>
+          <NewProjectProvider>
+            <Component {...pageProps} />
+            <Modal />
+          </NewProjectProvider>
+        </ModalsProvider>
+      </LoginProvider>
     </div>
   )
 }

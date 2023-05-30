@@ -12,7 +12,7 @@ interface Props {
 }
 
 const UserAbout = ({ data }: Props) => {
-  const route = useRouter()
+  const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
 
   const [nick, setNick] = useState('')
@@ -50,7 +50,6 @@ const UserAbout = ({ data }: Props) => {
       const modalObj = {
         id: 'modal-about',
         content: text,
-        confirm: clickSaveBtn,
       }
 
       openModal(modalObj)
@@ -58,7 +57,7 @@ const UserAbout = ({ data }: Props) => {
   }
 
   const clickCancelBtn = () => {
-    route.push('/user')
+    router.push('/user')
   }
 
   const clickSaveBtn = async () => {

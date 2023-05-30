@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import {
-  LoginContext,
   ModalsDispatchContext,
   ModalsStateContext,
   NavContext,
+  NewProjectContext,
+  LoginContext,
 } from './contexts'
+import { Type_Project } from 'types/Types'
 
 interface Props {
   children: React.ReactNode
@@ -48,5 +50,23 @@ export const LoginProvider = ({ children }: Props) => {
 
   return (
     <LoginContext.Provider value={loginState}>{children}</LoginContext.Provider>
+  )
+}
+
+export const NewProjectProvider = ({ children }: Props) => {
+  const projectState = useState<Type_Project>({
+    title: '',
+    intro: '',
+    meetType: '',
+    location: [],
+    week: [],
+    time: [],
+    position: [],
+  })
+
+  return (
+    <NewProjectContext.Provider value={projectState}>
+      {children}
+    </NewProjectContext.Provider>
   )
 }

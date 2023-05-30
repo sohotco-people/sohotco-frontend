@@ -11,7 +11,7 @@ interface NavMenu {
 }
 
 const Nav = () => {
-  const route = useRouter()
+  const router = useRouter()
   const [isNavOpened, setIsNavOpened] = useNavOpenState()
   const [isLogin, setIsLogin] = useIsLoginState()
 
@@ -24,7 +24,7 @@ const Nav = () => {
   }, [isNavOpened])
 
   const movePage = (link: string) => {
-    route.push(link)
+    router.push(link)
     setIsNavOpened(false)
   }
 

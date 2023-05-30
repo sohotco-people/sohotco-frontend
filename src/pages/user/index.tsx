@@ -10,7 +10,7 @@ interface Props {
 }
 
 const MyProfile = ({ data }: Props) => {
-  const route = useRouter()
+  const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
 
   const [percent, setPercent] = useState(0)
@@ -27,7 +27,7 @@ const MyProfile = ({ data }: Props) => {
   }, [data])
 
   const movePage = (link: string) => {
-    route.push(link)
+    router.push(link)
   }
 
   const deleteProfile = () => {}

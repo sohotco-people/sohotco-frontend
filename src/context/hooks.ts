@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { LoginContext, NavContext } from './contexts'
+import { LoginContext, NavContext, NewProjectContext } from './contexts'
 
 export const useNavOpenState = () => {
   const value = useContext(NavContext)
@@ -15,6 +15,17 @@ export const useIsLoginState = () => {
 
   if (value === undefined) {
     throw new Error('useIsLoginState should be used within LoginProvider')
+  }
+
+  return value
+}
+
+export const useNewProjectState = () => {
+  const value = useContext(NewProjectContext)
+  if (value === undefined) {
+    throw new Error(
+      'useNewProjectState should be used within NewProjectProvider',
+    )
   }
 
   return value

@@ -13,6 +13,7 @@
     "@types/react": "18.0.35",
     "@types/react-dom": "18.0.11",
     "@uiw/react-md-editor": "^3.6.0",
+    "cookies-next": "^2.1.1",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "next": "13.3.0",

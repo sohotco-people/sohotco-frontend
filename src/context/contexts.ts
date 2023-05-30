@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react'
-import { Type_NewProject } from 'types/Types'
+import { Type_Project } from 'types/Types'
 
 export const NavContext = createContext<
   [boolean, Dispatch<SetStateAction<boolean>>]
@@ -12,8 +12,12 @@ export const ModalsDispatchContext = createContext({
   closeModal: (props: object) => {},
 })
 
+export const LoginContext = createContext<
+  [boolean, Dispatch<SetStateAction<boolean>>]
+>([false, () => {}])
+
 export const NewProjectContext = createContext<
-  [Type_NewProject, Dispatch<SetStateAction<Type_NewProject>>]
+  [Type_Project, Dispatch<SetStateAction<Type_Project>>]
 >([
   {
     title: '',

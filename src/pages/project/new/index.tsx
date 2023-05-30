@@ -7,6 +7,12 @@ import { ModalsDispatchContext } from 'context/contexts'
 import { useNewProjectState } from 'context/hooks'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState, useEffect, useContext } from 'react'
+import dynamic from 'next/dynamic'
+
+import '@uiw/react-md-editor/markdown-editor.css'
+import '@uiw/react-markdown-preview/markdown.css'
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 const NewProject = () => {
   const router = useRouter()
@@ -15,6 +21,7 @@ const NewProject = () => {
 
   const [title, setTitle] = useState('')
   const [intro, setIntro] = useState('')
+  const [projectDesc, setProjectDesc] = useState<string | undefined>('')
 
   useEffect(() => {
     const storage = window.sessionStorage
@@ -106,6 +113,8 @@ const NewProject = () => {
       text = '회의 일정을 선택하세요.'
     } else if (newProject.position.length === 0) {
       text = '모집 역할을 선택하세요.'
+    } else if (projectDesc === '') {
+      text = '프로젝트 소개를 입력하세요.'
     }
 
     if (text === '') {
@@ -155,6 +164,29 @@ const NewProject = () => {
       </div>
       <div className="mb-15">
         <SubTitle>프로젝트 소개</SubTitle>
+        <div>
+          <MDEditor
+            value={projectDesc}
+            onChange={setProjectDesc}
+            previewOptions={{
+              allowedElements: [
+                'h1',
+                'h2',
+                'h3',
+                'h4',
+                'h5',
+                'h6',
+                'p',
+                'a',
+                'span',
+                'br',
+              ],
+            }}
+            preview="edit"
+            visiableDragbar={false}
+            extraCommands={[]}
+          />
+        </div>
       </div>
       <ButtonGroupPercent
         leftBtnClick={openExitModal}

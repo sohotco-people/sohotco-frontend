@@ -1,5 +1,5 @@
 import NavMenu from '@atoms/navMenu'
-import { useIsLoginState, useNavOpenState } from 'context/hooks'
+import { useSignInState, useIsLoginState, useNavOpenState } from 'context/hooks'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
@@ -14,6 +14,7 @@ const Nav = () => {
   const router = useRouter()
   const [isNavOpened, setIsNavOpened] = useNavOpenState()
   const [isLogin, setIsLogin] = useIsLoginState()
+  const { signInPage, toggleSignIn } = useSignInState()
 
   useEffect(() => {
     if (isNavOpened) {
@@ -24,6 +25,10 @@ const Nav = () => {
   }, [isNavOpened])
 
   const movePage = (link: string) => {
+    if (link == '/signIn') {
+      toggleSignIn(signInPage)
+      return
+    }
     router.push(link)
     setIsNavOpened(false)
   }
@@ -91,7 +96,7 @@ const Nav = () => {
 }
 
 const NAV_DATA_NOTLOGIN = [
-  { id: 0, name: '로그인 ⋅ 회원가입', link: '/' },
+  { id: 0, name: '로그인 ⋅ 회원가입', link: '/signIn' },
   { id: 1, name: '사이드 프로젝트', link: '/project' },
 ]
 const NAV_DATA_LOGIN = [

@@ -5,6 +5,7 @@ import {
   NavContext,
   NewProjectContext,
   LoginContext,
+  SignInContext,
 } from './contexts'
 import { Type_Project } from 'types/Types'
 
@@ -47,9 +48,18 @@ export const ModalsProvider = ({ children }: Props) => {
 
 export const LoginProvider = ({ children }: Props) => {
   const loginState = useState(false)
+  const [signInPage, setSignInPage] = useState(false)
+
+  const toggleSignIn = (flag: boolean) => {
+    setSignInPage(!flag)
+  }
 
   return (
-    <LoginContext.Provider value={loginState}>{children}</LoginContext.Provider>
+    <LoginContext.Provider value={loginState}>
+      <SignInContext.Provider value={{ signInPage, toggleSignIn }}>
+        {children}
+      </SignInContext.Provider>
+    </LoginContext.Provider>
   )
 }
 

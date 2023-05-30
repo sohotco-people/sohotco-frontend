@@ -1,9 +1,7 @@
 import ProjectList from "@templates/projectList"
-import { useRouter } from "next/router"
 import { Type_Project } from "types/Types"
 
 const Project = () => {
-  const router = useRouter()
 
   const obj: Type_Project = {
     id: 'id',
@@ -22,12 +20,8 @@ const Project = () => {
 
   const arr = [obj, obj, obj, obj, obj, obj]
 
-  const handleClick = (idx: number) => {
-    router.push('/project/' + idx)
-  }
-
   return (
-    <ProjectList list={arr} handleClick={handleClick} />
+    <ProjectList list={arr} />
   )
 }
 

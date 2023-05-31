@@ -106,7 +106,7 @@ const NAV_DATA_LOGIN = [
 ]
 const SUB_NAV_DATA = [
   { id: 2.1, name: '내 소식', link: '/' },
-  { id: 2.2, name: '내 프로젝트', link: '/' }, // or 프로젝트 생성(프로젝트 없을 시)
+  { id: 2.2, name: '내 프로젝트', link: '/project/my' }, // or 프로젝트 생성(프로젝트 없을 시)
   { id: 2.3, name: '팀원 찾기', link: '/' },
 ]
 

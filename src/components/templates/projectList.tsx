@@ -17,8 +17,6 @@ const ProjectList: React.FC<Props> = ({ list }) => {
     router.push('/project/' + obj.id)
   }
 
-  console.log(arr)
-
   const projects = list.map((project, idx) => {
     let css = 'border-b border-b-gray3-500'
     if (arr.includes('list' + idx)) {

@@ -7,6 +7,7 @@ import {
   NavProvider,
   NewProjectProvider,
   LoginProvider,
+  ProjectActiveProvider,
 } from 'context/provider'
 import Modal from '@organisms/modal'
 import SignIn from '@templates/signIn'
@@ -22,9 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
         </NavProvider>
         <ModalsProvider>
           <NewProjectProvider>
-            <Component {...pageProps} />
-            <Modal />
-            <SignIn />
+            <ProjectActiveProvider>
+              <Component {...pageProps} />
+              <Modal />
+              <SignIn />
+            </ProjectActiveProvider>
           </NewProjectProvider>
         </ModalsProvider>
       </LoginProvider>

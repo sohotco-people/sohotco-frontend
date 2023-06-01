@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Children, useState } from 'react'
 import {
   ModalsDispatchContext,
   ModalsStateContext,
@@ -6,6 +6,7 @@ import {
   NewProjectContext,
   LoginContext,
   SignInContext,
+  ProjectActiveStateContext
 } from './contexts'
 import { Type_Project } from 'types/Types'
 
@@ -83,5 +84,23 @@ export const NewProjectProvider = ({ children }: Props) => {
     <NewProjectContext.Provider value={projectState}>
       {children}
     </NewProjectContext.Provider>
+  )
+}
+
+export const ProjectActiveProvider = ({ children }: Props) => {
+  const [arr, setArr] = useState<string[]>([])
+
+  const setActive = (idx: string) => {
+    setArr(prev => [
+      ...prev,
+      idx
+    ])
+  }
+
+  const value = { arr, setActive }
+  return (
+    <ProjectActiveStateContext.Provider value={value}>
+      {children}
+    </ProjectActiveStateContext.Provider>
   )
 }

@@ -3,7 +3,7 @@ export interface Type_User {
   name: string
   link: string
   intro: string
-  positions: Type_Detail[]
+  positions: number[]
   experiences: Type_Detail[]
   meetingLocations: Type_Detail[]
   meetingWeeks: Type_Detail[]
@@ -26,7 +26,7 @@ export interface Type_Project {
   location: string[]
   week: string[]
   time: string[]
-  position: string[]
+  position: number[]
   createdAt: string
   updatedAt: string
   isPublished: boolean

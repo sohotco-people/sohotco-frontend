@@ -40,7 +40,6 @@ const MeetingTime = ({ type = '' }: Props) => {
       return
     }
 
-    console.log(week)
     if (target.checked) {
       setWeek([...week, target.value])
     } else {
@@ -59,7 +58,7 @@ const MeetingTime = ({ type = '' }: Props) => {
       const modalobj = {
         id: 'modal-time',
         content: txt,
-        confirm: () => {},
+        confirm: () => { },
       }
       openModal(modalobj)
     } else {
@@ -71,7 +70,7 @@ const MeetingTime = ({ type = '' }: Props) => {
   }
 
   const cancel = () => {
-    router.back()
+    router.replace('/user')
   }
 
   return (

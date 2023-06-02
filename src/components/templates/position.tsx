@@ -5,25 +5,28 @@ import PositionChecks from '@molecules/positionChecks'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useNewProjectState } from 'context/hooks'
 import { useRouter } from 'next/router'
-import { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { fetchPut } from 'util/fetch'
 
 interface Props {
   type?: string
+  me?: any[]
 }
 
-const Position = ({ type = '' }: Props) => {
+const Position = ({ type = '', me }: Props) => {
   const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
   const [newProject, setNewProject] = useNewProjectState()
-  const [position, setPosition] = useState<string[]>([])
+  const [position, setPosition] = useState<number[]>([])
 
   const handleChecks = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
+    const num = Number(target.value)
 
     if (target.checked) {
-      setPosition([...position, target.value])
+      setPosition([...position, num])
     } else {
-      setPosition(position.filter(l => l != target.value))
+      setPosition(position.filter(l => l != num))
     }
   }
 
@@ -45,17 +48,30 @@ const Position = ({ type = '' }: Props) => {
         setNewProject({ ...newProject, position })
         router.back()
       }
+      console.log(position)
+      fetchPut('/user/me', { positions: position }).then(res => {
+        console.log(res)
+      })
     }
   }
 
   const cancel = () => {
-    router.back()
+    router.replace('/user')
   }
+
+  useEffect(() => {
+
+    if (me) {
+      let arr = me.map(p => p.id)
+      setPosition([...arr])
+    }
+
+  }, [me])
 
   return (
     <Layout>
       <h1 className="font-bold mb-10">역할을 선택해 주세요.</h1>
-      <PositionChecks onChange={handleChecks} />
+      <PositionChecks me={me} onChange={handleChecks} />
       {type === '' ? (
         <ButtonGroupPercent leftBtnClick={cancel} rightBtnClick={save} />
       ) : (

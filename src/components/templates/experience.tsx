@@ -36,7 +36,7 @@ const Experience = () => {
     }
 
     const cancel = () => {
-        router.back()
+        router.replace('/user')
     }
 
     return (

@@ -68,7 +68,7 @@ const MeetingSystem = ({ type = '' }: Props) => {
       const modalobj = {
         id: 'modal-meetingType',
         content: txt,
-        confirm: () => {},
+        confirm: () => { },
         // type: 'confirm'
         // title: '제목'
       }
@@ -82,7 +82,7 @@ const MeetingSystem = ({ type = '' }: Props) => {
   }
 
   const cancel = () => {
-    router.back()
+    router.replace('/user')
   }
 
   return (

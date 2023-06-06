@@ -40,3 +40,8 @@ export const NewProjectContext = createContext<
   },
   () => { },
 ])
+
+export const ProjectActiveStateContext = createContext<{ arr: string[], setActive: Function }>({
+  arr: [],
+  setActive: (idx: string) => { }
+})

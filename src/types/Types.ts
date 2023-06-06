@@ -3,7 +3,7 @@ export interface Type_User {
   name: string
   link: string
   intro: string
-  positions: number[]
+  positions: Type_Detail[]
   experiences: Type_Detail[]
   meetingLocations: Type_Detail[]
   meetingWeeks: Type_Detail[]

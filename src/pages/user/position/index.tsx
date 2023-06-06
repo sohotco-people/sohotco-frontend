@@ -1,18 +1,16 @@
 import Position from "@templates/position"
-import { useEffect, useState } from "react"
-import { fetchGet } from "util/fetch"
+import { useUser } from "context/hooks"
+import { useEffect } from "react"
 
 const UserPosition = () => {
-    const [me, setMe] = useState([])
+    const { me, getMe } = useUser()
 
     useEffect(() => {
-        fetchGet('/user/me', {}).then(res => {
-            setMe(res.data.positions)
-        })
+        getMe()
     }, [])
 
     return (
-        <Position me={me} />
+        <Position user={me} />
     )
 }
 

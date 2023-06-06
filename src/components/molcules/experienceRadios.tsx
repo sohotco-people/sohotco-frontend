@@ -20,7 +20,6 @@ const ExperienceRadios: React.FC<Props> = ({ experience, user, onChange }) => {
 
     useEffect(() => {
         if (user?.experiences && user?.experiences.length > 0) {
-            console.log(user?.experiences)
             setChecked(user?.experiences[0].id)
         }
     }, [user])

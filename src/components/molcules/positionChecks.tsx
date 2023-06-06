@@ -1,40 +1,25 @@
 import CheckBox from "@atoms/checkbox"
 import { ChangeEventHandler, useEffect, useState } from "react"
-import { fetchGet } from "util/fetch"
+import { Type_User } from "types/Types"
 
 interface Props {
+    position: Type_User[]
     onChange: ChangeEventHandler
-    me?: any[]
+    user?: Type_User
 }
 
-const PositionChecks: React.FC<Props> = ({ onChange, me }) => {
-    const [position, setPosition] = useState<any[]>([])
+const PositionChecks: React.FC<Props> = ({ position, onChange, user }) => {
+    const [checked, setChecked] = useState<number[]>([])
 
     useEffect(() => {
-        if (me && me?.length != 0) {
-            let meArr = me.map(m => m.id)
-            const re = position.map((p: any) => {
-                p.checked = meArr.includes(p.id) ? true : false
-                return p
-            })
-
-            setPosition(p => [...re])
-            return
+        if (user?.positions && user?.positions.length > 0) {
+            setChecked(user?.positions.map((p) => p.id))
         }
-
-        fetchGet('/option/positions', {}).then(res => {
-            const result = res.data.map((p: any) => {
-                p.checked = false
-                return p
-            })
-
-            setPosition(p => [...result])
-        })
-    }, [me])
+    }, [user])
 
     return (
         <div className="grid grid-cols-1">
-            {position.map(obj => < CheckBox key={obj.id} value={obj.id} title={obj.name} onChange={onChange} check={obj.checked} />)}
+            {position.map(obj => < CheckBox key={obj.id} value={obj.id} title={obj.name} onChange={onChange} check={checked.includes(obj.id)} />)}
         </div>
     )
 }

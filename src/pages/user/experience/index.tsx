@@ -1,14 +1,17 @@
 import Experience from "@templates/experience"
-import { useEffect, useState } from "react"
+import { useUser } from "context/hooks"
+import { useEffect } from "react"
 
 const UserExperience = () => {
 
-    useEffect(() => {
+    const { me, getMe } = useUser()
 
+    useEffect(() => {
+        getMe()
     }, [])
 
     return (
-        <Experience />
+        <Experience user={me} />
     )
 }
 

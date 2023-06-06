@@ -65,17 +65,23 @@ export const useUser = () => {
     })
   }
 
+  const getPosition = () => {
+    fetchGet('/option/positions', {}).then(res => {
+      setPosition(res.data)
+    })
+  }
+
   const update = (obj: any) => {
     fetchPut('/user/me', obj).then(res => {
       if (res.status == 200) {
 
         openModal({
-          id: 'modal-alert',
+          id: 'm-alert',
           content: '저장되었습니다.'
         })
       }
     })
   }
 
-  return { update, selected, setSelected, me, getMe, experience, getExperience }
+  return { update, selected, setSelected, me, getMe, experience, getExperience, position, getPosition }
 }

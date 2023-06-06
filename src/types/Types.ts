@@ -5,9 +5,9 @@ export interface Type_User {
   intro: string
   positions: Type_Detail[]
   experiences: Type_Detail[]
-  meetingLocations: Type_Detail[]
+  locations: Type_Detail[]
   meetingWeeks: Type_Detail[]
-  meetingSystems: Type_Detail[]
+  meeting_systems: Type_Detail[]
   meetingTimes: Type_Detail[]
   createdAt: Date
   deletedAt?: Date

@@ -26,7 +26,7 @@ export interface Type_Project {
   location: string[]
   week: string[]
   time: string[]
-  position: string[]
+  position: number[]
   createdAt: string
   updatedAt: string
   isPublished: boolean

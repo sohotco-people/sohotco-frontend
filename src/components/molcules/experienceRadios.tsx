@@ -1,23 +1,34 @@
 import Radio from "@atoms/radio"
-import { ChangeEventHandler } from "react"
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react"
+import { Type_Detail, Type_User } from "types/Types"
 
 interface Props {
+    experience: Type_Detail[]
+    user?: Type_User
     onChange: ChangeEventHandler
 }
 
-const ExperienceRadios: React.FC<Props> = ({ onChange }) => {
+const ExperienceRadios: React.FC<Props> = ({ experience, user, onChange }) => {
 
-    const experience = [
-        { title: '경력 없음', value: 'none' },
-        { title: '1년~3년', value: '1-3' },
-        { title: '4년~6년', value: '4-6' },
-        { title: '7년~9년', value: '7-9' },
-        { title: '10년 이상', value: '10' },
-    ]
+    const [checked, setChecked] = useState(0)
+
+    const handleRadio = (e: ChangeEvent) => {
+        const target = e.target as HTMLInputElement
+        setChecked(Number(target.value))
+        onChange(e)
+    }
+
+    useEffect(() => {
+        if (user?.experiences && user?.experiences.length > 0) {
+            setChecked(user?.experiences[0].id)
+        }
+    }, [user])
 
     return (
         <div>
-            {experience.map(obj => <Radio key={obj.value} name={"experience"} value={obj.value} title={obj.title} onChange={onChange} />)}
+            {experience.map((obj, idx) =>
+                <Radio key={idx} name={"experience"} value={obj.id} title={obj.name} onChange={handleRadio} checked={checked} />
+            )}
         </div>
     )
 }

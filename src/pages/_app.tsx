@@ -7,8 +7,10 @@ import {
   NavProvider,
   NewProjectProvider,
   LoginProvider,
+  ProjectActiveProvider,
 } from 'context/provider'
 import Modal from '@organisms/modal'
+import SignIn from '@templates/signIn'
 
 const inter = Inter({ subsets: ['latin'], variable: '--inter' })
 
@@ -21,8 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
         </NavProvider>
         <ModalsProvider>
           <NewProjectProvider>
-            <Component {...pageProps} />
-            <Modal />
+            <ProjectActiveProvider>
+              <Component {...pageProps} />
+              <Modal />
+              <SignIn />
+            </ProjectActiveProvider>
           </NewProjectProvider>
         </ModalsProvider>
       </LoginProvider>

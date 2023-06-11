@@ -1,21 +1,25 @@
 import CheckBox from "@atoms/checkbox"
-import { ChangeEventHandler } from "react"
+import { ChangeEventHandler, useEffect, useState } from "react"
+import { Type_User } from "types/Types"
 
 interface Props {
+    position: Type_User[]
     onChange: ChangeEventHandler
+    user?: Type_User
 }
 
-const PositionChecks: React.FC<Props> = ({ onChange }) => {
-    const position = [
-        { title: '프론트엔드', value: 'fr' },
-        { title: '백엔드', value: 'ba' },
-        { title: '디자이너', value: 'de' },
-        { title: '기획자', value: 'pl' },
-    ]
+const PositionChecks: React.FC<Props> = ({ position, onChange, user }) => {
+    const [checked, setChecked] = useState<number[]>([])
+
+    useEffect(() => {
+        if (user?.positions && user?.positions.length > 0) {
+            setChecked(user?.positions.map((p) => p.id))
+        }
+    }, [user])
 
     return (
         <div className="grid grid-cols-1">
-            {position.map(obj => <CheckBox key={obj.value} value={obj.value} title={obj.title} onChange={onChange} />)}
+            {position.map(obj => < CheckBox key={obj.id} value={obj.id} title={obj.name} onChange={onChange} check={checked.includes(obj.id)} />)}
         </div>
     )
 }

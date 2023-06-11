@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { Children, useState } from 'react'
 import {
   ModalsDispatchContext,
   ModalsStateContext,
   NavContext,
   NewProjectContext,
   LoginContext,
+  SignInContext,
+  ProjectActiveStateContext
 } from './contexts'
 import { Type_Project } from 'types/Types'
 
@@ -47,14 +49,24 @@ export const ModalsProvider = ({ children }: Props) => {
 
 export const LoginProvider = ({ children }: Props) => {
   const loginState = useState(false)
+  const [signInPage, setSignInPage] = useState(false)
+
+  const toggleSignIn = (flag: boolean) => {
+    setSignInPage(!flag)
+  }
 
   return (
-    <LoginContext.Provider value={loginState}>{children}</LoginContext.Provider>
+    <LoginContext.Provider value={loginState}>
+      <SignInContext.Provider value={{ signInPage, toggleSignIn }}>
+        {children}
+      </SignInContext.Provider>
+    </LoginContext.Provider>
   )
 }
 
 export const NewProjectProvider = ({ children }: Props) => {
   const projectState = useState<Type_Project>({
+    id: '',
     title: '',
     intro: '',
     meetType: '',
@@ -62,11 +74,33 @@ export const NewProjectProvider = ({ children }: Props) => {
     week: [],
     time: [],
     position: [],
+    createdAt: '',
+    updatedAt: '',
+    isPublished: false,
+    viewCnt: '',
   })
 
   return (
     <NewProjectContext.Provider value={projectState}>
       {children}
     </NewProjectContext.Provider>
+  )
+}
+
+export const ProjectActiveProvider = ({ children }: Props) => {
+  const [arr, setArr] = useState<string[]>([])
+
+  const setActive = (idx: string) => {
+    setArr(prev => [
+      ...prev,
+      idx
+    ])
+  }
+
+  const value = { arr, setActive }
+  return (
+    <ProjectActiveStateContext.Provider value={value}>
+      {children}
+    </ProjectActiveStateContext.Provider>
   )
 }

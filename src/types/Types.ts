@@ -19,11 +19,16 @@ export interface Type_Detail {
 }
 
 export interface Type_Project {
+  id: string
   title: string
   intro: string
   meetType: string
   location: string[]
   week: string[]
   time: string[]
-  position: string[]
+  position: number[]
+  createdAt: string
+  updatedAt: string
+  isPublished: boolean
+  viewCnt: string
 }

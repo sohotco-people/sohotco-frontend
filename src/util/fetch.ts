@@ -1,11 +1,16 @@
-const baseurl = 'http://13.124.128.55:8080'
+const baseurl = 'http://localhost:8080'
 
 export const fetchGet = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path + '?' + new URLSearchParams(params).toString()
   const option = {
     method: 'GET',
-    headers: headers,
-  }
+    credentials: 'include',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+      // cookie 라는 key는 안됨
+    }
+  } as RequestInit
 
   try {
     const res = await fetch(url, option)
@@ -19,12 +24,13 @@ export const fetchPost = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
   const option = {
     method: 'POST',
+    credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
       ...headers,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  }
+  } as RequestInit
 
   try {
     const res = await fetch(url, option)
@@ -38,12 +44,13 @@ export const fetchPut = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
   const option = {
     method: 'PUT',
+    credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
       ...headers,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  }
+  } as RequestInit
 
   try {
     const res = await fetch(url, option)

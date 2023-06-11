@@ -3,27 +3,33 @@ import LinedInput from '@atoms/linedInput'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import { MY_DATA } from 'config'
 import { ModalsDispatchContext } from 'context/contexts'
+import { useUser } from 'context/hooks'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Type_User } from 'types/Types'
-import { fetchGet, fetchPut } from 'util/fetch'
+import { fetchPut } from 'util/fetch'
 
 interface Props {
   data: Type_User
 }
 
-const UserAbout = ({ data }: Props) => {
+const UserAbout = () => {
   const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
+  const { me, getMe } = useUser()
 
   const [nick, setNick] = useState('')
   const [link, setLink] = useState('')
 
   useEffect(() => {
-    if (data.name) {
-      setNick(data.name)
+    getMe()
+  }, [])
+
+  useEffect(() => {
+    if (me?.name) {
+      setNick(me.name)
     }
-  }, [data.name])
+  }, [me])
 
   const changeNickVal = (val: string) => {
     setNick(val)
@@ -72,7 +78,7 @@ const UserAbout = ({ data }: Props) => {
       }
 
       const res = await fetchPut(MY_DATA, params)
-      if (res.code === 200) {
+      if (res.status === 200) {
         const modalObj = {
           id: 'modal-about',
           content: '성공적으로 업데이트를 완료하였습니다.',
@@ -114,13 +120,3 @@ const UserAbout = ({ data }: Props) => {
 }
 
 export default UserAbout
-
-export async function getStaticProps() {
-  const data = await fetchGet(MY_DATA).then(res => res.data)
-
-  return {
-    props: {
-      data,
-    },
-  }
-}

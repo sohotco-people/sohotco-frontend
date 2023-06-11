@@ -4,26 +4,32 @@ import Textarea from '@atoms/textarea'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import { MY_DATA } from 'config'
 import { ModalsDispatchContext } from 'context/contexts'
+import { useUser } from 'context/hooks'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Type_User } from 'types/Types'
-import { fetchGet, fetchPut } from 'util/fetch'
+import { fetchPut } from 'util/fetch'
 
 interface Props {
   data: Type_User
 }
 
-const UserIntro = ({ data }: Props) => {
+const UserIntro = () => {
   const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
+  const { me, getMe } = useUser()
 
   const [introText, setIntroText] = useState<string>('')
 
   useEffect(() => {
-    if (data.intro) {
-      setIntroText(data.intro)
+    getMe()
+  }, [])
+
+  useEffect(() => {
+    if (me?.intro) {
+      setIntroText(me.intro)
     }
-  }, [data.intro])
+  }, [me])
 
   useEffect(() => {
     if (introText.length > 0) {
@@ -81,7 +87,7 @@ const UserIntro = ({ data }: Props) => {
       }
 
       const res = await fetchPut(MY_DATA, params)
-      if (res.code === 200) {
+      if (res.status === 200) {
         const modalObj = {
           id: 'modal-intro',
           content: '성공적으로 업데이트를 완료하였습니다.',
@@ -111,13 +117,3 @@ const UserIntro = ({ data }: Props) => {
 }
 
 export default UserIntro
-
-export async function getStaticProps() {
-  const data = await fetchGet(MY_DATA).then(res => res.data)
-
-  return {
-    props: {
-      data,
-    },
-  }
-}

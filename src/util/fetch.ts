@@ -9,7 +9,7 @@ export const fetchGet = async (path: string, params = {}, headers = {}) => {
       ...headers,
       'Content-Type': 'application/json',
       // cookie 라는 key는 안됨
-    }
+    },
   } as RequestInit
 
   try {
@@ -64,11 +64,12 @@ export const fetchDelete = async (path: string, headers = {}) => {
   const url = baseurl + path
   const option = {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       ...headers,
     },
-  }
+  } as RequestInit
 
   try {
     const res = await fetch(url, option)

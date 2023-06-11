@@ -20,6 +20,7 @@ const Header = () => {
           ? query.access_token[0]
           : query.access_token
       createCookie('SOHOTCO_OAUTH', token)
+      setIsLogin(true)
       router.push(router.pathname)
       // 팝업 닫기
     }

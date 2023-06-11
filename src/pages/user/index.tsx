@@ -2,38 +2,47 @@ import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@atoms/layout'
 import Panel from '@atoms/panel'
-import { Type_User } from 'types/Types'
 import { ModalsDispatchContext } from 'context/contexts'
-import { fetchDelete, fetchGet } from 'util/fetch'
+import { fetchDelete } from 'util/fetch'
 import { MY_DATA } from 'config'
+import { useUser } from 'context/hooks'
+import { useLogout } from 'hooks/hooks'
 
-interface Props {
-  data: Type_User
-}
-
-const MyProfile = ({ data }: Props) => {
+const MyProfile = () => {
   const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
+  const { me, getMe } = useUser()
+  const { logout } = useLogout()
 
   const [percent, setPercent] = useState(0)
 
   useEffect(() => {
-    let cnt = 0
-    if (data.name) cnt++
-    if (data.intro) cnt++
-    if (data.meetingSystems.length > 0) cnt++
-    if (data.meetingWeeks.length > 0) cnt++
-    if (data.positions.length > 0) cnt++
-    if (data.experiences.length > 0) cnt++
-    setPercent(cnt)
-  }, [data])
+    getMe()
+  }, [])
+
+  useEffect(() => {
+    if (me) {
+      let cnt = 0
+      if (me.name) cnt++
+      if (me.intro) cnt++
+      if (me.meeting_systems.length || 0 > 0) cnt++
+      if (me.weeks.length || 0 > 0) cnt++
+      if (me.positions.length || 0 > 0) cnt++
+      if (me.experiences.length || 0 > 0) cnt++
+      setPercent(cnt)
+    }
+  }, [me])
 
   const movePage = (link: string) => {
     router.push(link)
   }
 
-  const deleteProfile = () => {
-    fetchDelete(MY_DATA)
+  const deleteProfile = async () => {
+    const res = await fetchDelete(MY_DATA)
+
+    if (res.status === 200) {
+      logout()
+    }
   }
 
   const openDeleteModal = () => {
@@ -92,13 +101,3 @@ const DATA = [
 ]
 
 export default MyProfile
-
-export async function getStaticProps() {
-  const data = await fetchGet(MY_DATA).then(res => res.data)
-
-  return {
-    props: {
-      data,
-    },
-  }
-}

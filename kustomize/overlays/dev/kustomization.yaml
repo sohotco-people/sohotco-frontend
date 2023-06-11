@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+images:
+- name: sohotco-frontend-image
+  newName: 270112669095.dkr.ecr.ap-northeast-2.amazonaws.com/sohotco-frontend
+  newTag: dffa900822311968d07ccab64198209957cef7d4

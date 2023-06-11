@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sohotco-backend-configmap
+data:
+  PORT: "8080"
+  DB_HOST : "sohotco-db.cx2m6uauubyd.ap-northeast-2.rds.amazonaws.com:3306"
+  DB_ADMIN_USER : "admin"
+  DB_NAME : "sohotco"
+  KAKAO_REDIRECT_URI: "http://3.35.244.176:8080/login/oauth"
+  KAKAO_REST_API_KEY: "56d382231684779a121b84fdb402a224"
+  SOHOTCO_OAUTH_KEY: "SOHOTCO_OAUTH"
+  DATABASE_URL : "mysql://admin:sohotco123!@sohotco-db.cx2m6uauubyd.ap-northeast-2.rds.amazonaws.com:3306/sohotco"

@@ -53,6 +53,24 @@ export const fetchPut = async (path: string, params = {}, headers = {}) => {
   }
 }
 
+export const fetchDelete = async (path: string, headers = {}) => {
+  const url = baseurl + path
+  const option = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+  }
+
+  try {
+    const res = await fetch(url, option)
+    return res.json()
+  } catch (e) {
+    console.log('error: ', e)
+  }
+}
+
 const uploadFiles = async (path: string, formData: FormData) => {
   const url = baseurl + path
   const option = {

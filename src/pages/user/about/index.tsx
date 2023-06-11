@@ -1,11 +1,12 @@
 import Layout from '@atoms/layout'
 import LinedInput from '@atoms/linedInput'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
+import { MY_DATA } from 'config'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Type_User } from 'types/Types'
-import { fetchPut } from 'util/fetch'
+import { fetchGet, fetchPut } from 'util/fetch'
 
 interface Props {
   data: Type_User
@@ -62,7 +63,6 @@ const UserAbout = ({ data }: Props) => {
 
   const clickSaveBtn = async () => {
     if (nick.length > 0) {
-      const path = '/user/me'
       let params: { name: string; link?: string } = {
         name: nick,
       }
@@ -71,7 +71,7 @@ const UserAbout = ({ data }: Props) => {
         params.link = link
       }
 
-      const res = await fetchPut(path, params)
+      const res = await fetchPut(MY_DATA, params)
       if (res.code === 200) {
         const modalObj = {
           id: 'modal-about',
@@ -116,20 +116,7 @@ const UserAbout = ({ data }: Props) => {
 export default UserAbout
 
 export async function getStaticProps() {
-  const data = {
-    id: 1,
-    name: 'name',
-    link: '/link',
-    intro: 'introduction',
-    positions: [{ id: 1, name: 'gn' }],
-    experiences: [{ id: 1, name: 'gn' }],
-    meetingLocations: [{ id: 1, name: 'gn' }],
-    meetingWeeks: [{ id: 1, name: 'gn' }],
-    meetingSystems: [{ id: 1, name: 'gn' }],
-    meetingTimes: [{ id: 1, name: 'gn' }],
-    createdAt: '2023-05-17',
-    deletedAt: '2023-05-17',
-  }
+  const data = await fetchGet(MY_DATA).then(res => res.data)
 
   return {
     props: {

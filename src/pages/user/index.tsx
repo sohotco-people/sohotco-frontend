@@ -4,6 +4,8 @@ import Layout from '@atoms/layout'
 import Panel from '@atoms/panel'
 import { Type_User } from 'types/Types'
 import { ModalsDispatchContext } from 'context/contexts'
+import { fetchDelete, fetchGet } from 'util/fetch'
+import { MY_DATA } from 'config'
 
 interface Props {
   data: Type_User
@@ -30,7 +32,9 @@ const MyProfile = ({ data }: Props) => {
     router.push(link)
   }
 
-  const deleteProfile = () => {}
+  const deleteProfile = () => {
+    fetchDelete(MY_DATA)
+  }
 
   const openDeleteModal = () => {
     const modalObj = {
@@ -90,20 +94,7 @@ const DATA = [
 export default MyProfile
 
 export async function getStaticProps() {
-  const data = {
-    id: 1,
-    name: 'name',
-    link: '/link',
-    intro: 'introduction',
-    positions: [{ id: 1, name: 'gn' }],
-    experiences: [{ id: 1, name: 'gn' }],
-    meetingLocations: [{ id: 1, name: 'gn' }],
-    meetingWeeks: [{ id: 1, name: 'gn' }],
-    meetingSystems: [{ id: 1, name: 'gn' }],
-    meetingTimes: [{ id: 1, name: 'gn' }],
-    createdAt: '2023-05-17',
-    deletedAt: '2023-05-17',
-  }
+  const data = await fetchGet(MY_DATA).then(res => res.data)
 
   return {
     props: {

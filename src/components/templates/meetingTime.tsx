@@ -5,32 +5,38 @@ import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import TimeRadios from '@molecules/timeRadios'
 import WeekChecks from '@molecules/weekChecks'
 import { ModalsDispatchContext } from 'context/contexts'
-import { useNewProjectState } from 'context/hooks'
+import { useNewProjectState, useUser } from 'context/hooks'
 import { useRouter } from 'next/router'
-import { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { Type_User } from 'types/Types'
 
 interface Props {
   type?: string
+  user?: Type_User
 }
 
-const MeetingTime = ({ type = '' }: Props) => {
-  const [week, setWeek] = useState<string[]>([])
-  const [time, setTime] = useState<string[]>([])
+const MeetingTime = ({ type = '', user }: Props) => {
+  const router = useRouter()
+
   const { openModal } = useContext(ModalsDispatchContext)
   const [newProject, setNewProject] = useNewProjectState()
-  const router = useRouter()
+
+  const { week, getWeek, meetingTime, getMeetingTime } = useUser()
+
+  const [times, setTimes] = useState<string[]>([])
+  const [weeks, setWeeks] = useState<string[]>([])
 
   const handleRadios = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
 
     let val = target.value
-    setTime([val])
+    setTimes([val])
   }
 
   const handleChecks = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
 
-    if (!week.includes(target.value) && week.length == 2) {
+    if (!weeks.includes(target.value) && week.length == 2) {
       const modalobj = {
         id: 'modal-max2',
         content: '최대 2개까지 선택 가능합니다.',
@@ -41,16 +47,16 @@ const MeetingTime = ({ type = '' }: Props) => {
     }
 
     if (target.checked) {
-      setWeek([...week, target.value])
+      setWeeks([...week, target.value])
     } else {
-      setWeek(week.filter(l => l != target.value))
+      setWeeks(week.filter(l => l != target.value))
     }
   }
 
   const save = () => {
     let txt = null
 
-    if (week.length != 0 && time.length == 0) {
+    if (weeks.length != 0 && times.length == 0) {
       txt = '회의 시간을 선택하세요.'
     }
 
@@ -63,7 +69,7 @@ const MeetingTime = ({ type = '' }: Props) => {
       openModal(modalobj)
     } else {
       if (type !== '') {
-        setNewProject({ ...newProject, week, time })
+        setNewProject({ ...newProject, week: weeks, time: times })
         router.back()
       }
     }
@@ -73,14 +79,19 @@ const MeetingTime = ({ type = '' }: Props) => {
     router.replace('/user')
   }
 
+  useEffect(() => {
+    getWeek()
+    getMeetingTime()
+  }, [])
+
   return (
     <Layout>
       <h1 className="font-bold mb-10">
         원하는 회의 요일과 시간을 선택해 주세요.
       </h1>
-      <WeekChecks onChange={handleChecks} />
+      <WeekChecks week={week} onChange={handleChecks} user={user} />
       <Divider />
-      <TimeRadios onChange={handleRadios} />
+      <TimeRadios meetingTime={meetingTime} onChange={handleRadios} user={user} />
       {type === '' ? (
         <ButtonGroupPercent leftBtnClick={cancel} rightBtnClick={save} />
       ) : (

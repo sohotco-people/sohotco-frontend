@@ -54,6 +54,8 @@ export const useUser = () => {
   const [location, setLocation] = useState([])
   const [experience, setExperience] = useState([])
   const [meetingSystem, setMeetingSystem] = useState([])
+  const [week, setWeek] = useState([])
+  const [meetingTime, setMeetingTime] = useState([])
 
   const getMe = () => {
     fetchGet('/user/me', {}).then(res => {
@@ -85,6 +87,19 @@ export const useUser = () => {
     })
   }
 
+  const getWeek = () => {
+    fetchGet('/option/week', {}).then(res => {
+      setWeek(res.data)
+    })
+  }
+
+  const getMeetingTime = () => {
+    fetchGet('/option/meeting-times', {}).then(res => {
+      setMeetingTime(res.data)
+    })
+
+  }
+
   const update = (obj: any) => {
     fetchPut('/user/me', obj).then(res => {
       if (res.status == 200) {
@@ -103,6 +118,8 @@ export const useUser = () => {
     position, getPosition,
     location, getLocation,
     experience, getExperience,
-    meetingSystem, getMeetingSystem
+    meetingSystem, getMeetingSystem,
+    week, getWeek,
+    meetingTime, getMeetingTime
   }
 }

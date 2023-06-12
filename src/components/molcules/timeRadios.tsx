@@ -1,20 +1,31 @@
 import Radio from "@atoms/radio"
-import React, { ChangeEventHandler } from "react"
+import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react"
+import { Type_Detail, Type_User } from "types/Types"
 
 interface Props {
+    meetingTime: Type_Detail[]
     onChange: ChangeEventHandler
+    user?: Type_User
 }
 
-const TimeRadios: React.FC<Props> = ({ onChange }) => {
-    const time = [
-        { title: '6시~12시', value: '6-12' },
-        { title: '12시~18시', value: '12-18' },
-        { title: '18시~24시', value: '18-24' }
-    ]
+const TimeRadios: React.FC<Props> = ({ meetingTime, onChange, user }) => {
+    const [checked, setChecked] = useState(0)
+
+    const handleRadio = (e: ChangeEvent) => {
+        const target = e.target as HTMLInputElement
+        setChecked(Number(target.value))
+        onChange(e)
+    }
+
+    useEffect(() => {
+        if (user?.meetingTimes && user?.meetingTimes.length > 0) {
+            setChecked(user?.meetingTimes[0].id)
+        }
+    }, [user])
 
     return (
         <div>
-            {time.map(obj => <Radio key={obj.value} name={"time"} value={obj.value} title={obj.title} onChange={onChange} />)}
+            {meetingTime.map(obj => <Radio key={obj.id} name={"time"} value={obj.id} title={obj.name} onChange={handleRadio} checked={checked} />)}
         </div>
     )
 }

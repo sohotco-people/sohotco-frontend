@@ -1,5 +1,6 @@
 import { useSignInState } from 'context/hooks'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 const SignIn = () => {
@@ -33,7 +34,14 @@ const SignIn = () => {
             </span>
           </div>
         </div>
-        <Link className="px-6 py-4 w-full bg-yellow-400 rounded text-center" href={KAKAO_AUTH_URL}>
+        <Link className="px-6 py-4 w-full bg-[#FEE500] rounded text-center font-semibold" href={KAKAO_AUTH_URL}>
+          <Image
+            src="/images/kakao.png"
+            alt="menu arrow"
+            className='float-left'
+            width={24}
+            height={24}
+          />
           카카오로 시작하기
         </Link>
       </div>

@@ -4,6 +4,7 @@ import { useIsLoginState, useNavOpenState } from 'context/hooks'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { createCookie, readCookie } from 'util/cookie'
+import sohotco from '../../../public/images/sohotco-logo-02.png'
 
 const Header = () => {
   const router = useRouter()
@@ -38,7 +39,7 @@ const Header = () => {
     <>
       <div className="sticky top-0 h-20 w-full p-5 bg-white shadow-md flex justify-between items-center z-20 relative">
         <Image
-          src="/images/sohotco-logo-02.png"
+          src={sohotco}
           alt="logo"
           width={44}
           height={44}

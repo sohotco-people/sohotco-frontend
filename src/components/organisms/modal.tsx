@@ -37,12 +37,7 @@ const Modal = () => {
 
     const onAlert = (
       <div className="grid grid-cols-1">
-        <SquareBtn
-          type={'point'}
-          onClick={() => {
-            closeModal(modal)
-          }}
-        >
+        <SquareBtn type={'point'} onClick={confirmBtn}>
           {confirmTxt}
         </SquareBtn>
       </div>

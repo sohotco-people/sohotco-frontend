@@ -76,7 +76,7 @@ const MeetingTime = ({ type = '', user }: Props) => {
   useEffect(() => {
     getWeek()
     getMeetingTime()
-  }, [user])
+  }, [])
 
   return (
     <Layout>

@@ -69,7 +69,7 @@ const MeetingSystem = ({ type = '', user }: Props) => {
       openModal(modalobj)
     } else {
       if (type !== '') {
-        setNewProject({ ...newProject, meetingSystems: meetingSystemRadios, locations: locationChecks })
+        setNewProject({ ...newProject, meeting_systems: meetingSystemRadios, locations: locationChecks })
         router.back()
       }
 

@@ -8,12 +8,12 @@ interface Props {
 }
 
 const ProjectListItem: React.FC<Props> = ({ project }) => {
-  const { title, intro, createdAt, viewCnt } = project
+  const { name, intro, createdAt, viewCnt } = project
 
   return (
     <Layout>
       <div className="grid gap-[30px]">
-        <ProjectBasicInfo title={title} desc={intro} subTexts={[createdAt, '조회수 ' + viewCnt]} />
+        <ProjectBasicInfo title={name} desc={intro} subTexts={[createdAt, '조회수 ' + viewCnt]} />
       </div>
     </Layout>
   )

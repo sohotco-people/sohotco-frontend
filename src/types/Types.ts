@@ -20,10 +20,11 @@ export interface Type_Detail {
 
 export interface Type_Project {
   id: string
-  title: string
+  name: string
   intro: string
   meetType: string
-  location: string[]
+  locations: number[]
+  meeting_systems: number[]
   week: number[]
   time: number[]
   position: number[]

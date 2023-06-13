@@ -21,35 +21,26 @@ const MeetingTime = ({ type = '', user }: Props) => {
   const { openModal } = useContext(ModalsDispatchContext)
   const [newProject, setNewProject] = useNewProjectState()
 
-  const { week, getWeek, meetingTime, getMeetingTime } = useUser()
+  const { week, getWeek, meetingTime, getMeetingTime, update } = useUser()
 
-  const [times, setTimes] = useState<string[]>([])
-  const [weeks, setWeeks] = useState<string[]>([])
+  const [times, setTimes] = useState<number[]>([])
+  const [weeks, setWeeks] = useState<number[]>([])
 
   const handleRadios = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
 
-    let val = target.value
+    let val = Number(target.value)
     setTimes([val])
   }
 
   const handleChecks = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
-
-    if (!weeks.includes(target.value) && week.length == 2) {
-      const modalobj = {
-        id: 'modal-max2',
-        content: '최대 2개까지 선택 가능합니다.',
-      }
-      openModal(modalobj)
-      target.checked = false
-      return
-    }
+    let val = Number(target.value)
 
     if (target.checked) {
-      setWeeks([...week, target.value])
+      setWeeks([...weeks, val])
     } else {
-      setWeeks(week.filter(l => l != target.value))
+      setWeeks(weeks.filter(l => l != val))
     }
   }
 
@@ -71,7 +62,10 @@ const MeetingTime = ({ type = '', user }: Props) => {
       if (type !== '') {
         setNewProject({ ...newProject, week: weeks, time: times })
         router.back()
+        return
       }
+
+      update({ weeks: weeks, meeting_times: times })
     }
   }
 
@@ -82,7 +76,7 @@ const MeetingTime = ({ type = '', user }: Props) => {
   useEffect(() => {
     getWeek()
     getMeetingTime()
-  }, [])
+  }, [user])
 
   return (
     <Layout>

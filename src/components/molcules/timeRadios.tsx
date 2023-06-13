@@ -18,8 +18,8 @@ const TimeRadios: React.FC<Props> = ({ meetingTime, onChange, user }) => {
     }
 
     useEffect(() => {
-        if (user?.meetingTimes && user?.meetingTimes.length > 0) {
-            setChecked(user?.meetingTimes[0].id)
+        if (user?.meeting_times && user?.meeting_times.length > 0) {
+            setChecked(user?.meeting_times[0].id)
         }
     }, [user])
 

@@ -88,7 +88,7 @@ export const useUser = () => {
   }
 
   const getWeek = () => {
-    fetchGet('/option/week', {}).then(res => {
+    fetchGet('/option/weeks', {}).then(res => {
       setWeek(res.data)
     })
   }

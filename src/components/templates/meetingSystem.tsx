@@ -84,6 +84,9 @@ const MeetingSystem = ({ type = '', user }: Props) => {
   useEffect(() => {
     getMeetingSystem()
     getLocation()
+    if (user && user.meeting_systems[0].id == 2) {
+      meetingSystemRadios.push(2)
+    }
   }, [user])
 
   return (

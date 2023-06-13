@@ -1,5 +1,6 @@
 import CheckBox from "@atoms/checkbox"
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react"
+import { ModalsDispatchContext } from "context/contexts"
+import React, { ChangeEvent, ChangeEventHandler, useContext, useEffect, useState } from "react"
 import { Type_Detail, Type_User } from "types/Types"
 
 interface Props {
@@ -9,11 +10,24 @@ interface Props {
 }
 
 const WeekChecks: React.FC<Props> = ({ week, onChange, user }) => {
+    const { openModal } = useContext(ModalsDispatchContext)
+
     const [checked, setChecked] = useState<number[]>([])
 
     const handleChecks = (e: ChangeEvent) => {
         const target = e.target as HTMLInputElement
         let val = Number(target.value)
+
+        if (!checked.includes(val) && checked.length == 2) {
+
+            openModal({
+                id: 'modal-max2',
+                content: '최대 2개까지 선택 가능합니다.',
+            })
+            setChecked(checked.filter(l => l != val))
+
+            return
+        }
 
         if (target.checked) {
             setChecked([...checked, val])
@@ -25,8 +39,8 @@ const WeekChecks: React.FC<Props> = ({ week, onChange, user }) => {
     }
 
     useEffect(() => {
-        if (user?.meetingWeeks && user?.meetingWeeks.length > 0) {
-            setChecked(user?.meetingWeeks.map((p) => p.id))
+        if (user?.meeting_weeks && user?.meeting_weeks.length > 0) {
+            setChecked(user?.meeting_weeks.map((p) => p.id))
         }
     }, [user])
 

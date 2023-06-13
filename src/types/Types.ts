@@ -6,9 +6,9 @@ export interface Type_User {
   positions: Type_Detail[]
   experiences: Type_Detail[]
   locations: Type_Detail[]
-  meetingWeeks: Type_Detail[]
+  meeting_weeks: Type_Detail[]
   meeting_systems: Type_Detail[]
-  meetingTimes: Type_Detail[]
+  meeting_times: Type_Detail[]
   createdAt: Date
   deletedAt?: Date
 }
@@ -24,8 +24,8 @@ export interface Type_Project {
   intro: string
   meetType: string
   location: string[]
-  week: string[]
-  time: string[]
+  week: number[]
+  time: number[]
   position: number[]
   createdAt: string
   updatedAt: string

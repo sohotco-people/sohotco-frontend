@@ -9,7 +9,7 @@ export const fetchGet = async (path: string, params = {}, headers = {}) => {
       ...headers,
       'Content-Type': 'application/json',
       // cookie 라는 key는 안됨
-    }
+    },
   } as RequestInit
 
   try {
@@ -50,6 +50,25 @@ export const fetchPut = async (path: string, params = {}, headers = {}) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
+  } as RequestInit
+
+  try {
+    const res = await fetch(url, option)
+    return res.json()
+  } catch (e) {
+    console.log('error: ', e)
+  }
+}
+
+export const fetchDelete = async (path: string, headers = {}) => {
+  const url = baseurl + path
+  const option = {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
   } as RequestInit
 
   try {

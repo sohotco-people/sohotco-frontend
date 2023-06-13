@@ -1,5 +1,6 @@
 import NavMenu from '@atoms/navMenu'
 import { useSignInState, useIsLoginState, useNavOpenState } from 'context/hooks'
+import { useLogout } from 'hooks/hooks'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect } from 'react'
@@ -13,8 +14,9 @@ interface NavMenu {
 const Nav = () => {
   const router = useRouter()
   const [isNavOpened, setIsNavOpened] = useNavOpenState()
-  const [isLogin, setIsLogin] = useIsLoginState()
+  const [isLogin] = useIsLoginState()
   const { signInPage, toggleSignIn } = useSignInState()
+  const { logout } = useLogout()
 
   useEffect(() => {
     if (isNavOpened) {
@@ -30,67 +32,73 @@ const Nav = () => {
       return
     }
     router.push(link)
-    setIsNavOpened(false)
+    setTimeout(() => setIsNavOpened(false), 150)
   }
 
   return (
     <div
-      className={`fixed top-20 bg-white w-full h-full z-10 ${isNavOpened ? 'visible' : 'invisible'
-        }`}
+      className={`fixed top-20 bg-white w-full h-full z-10 ${
+        isNavOpened ? 'visible' : 'invisible'
+      }`}
     >
       {isLogin
         ? NAV_DATA_LOGIN.map((nav: NavMenu) => {
-          if (nav.id === 2) {
-            return (
-              <Fragment key={nav.id}>
+            if (nav.id === 2) {
+              return (
+                <Fragment key={nav.id}>
+                  <NavMenu
+                    onClick={() => {
+                      movePage(nav.link)
+                    }}
+                  >
+                    {nav.name}
+                  </NavMenu>
+                  {SUB_NAV_DATA.map((nav: NavMenu) => {
+                    return (
+                      <NavMenu
+                        key={nav.id}
+                        onClick={() => {
+                          movePage(nav.link)
+                        }}
+                      >
+                        <Image
+                          src="/images/navArrow.png"
+                          alt="menu arrow"
+                          width={13}
+                          height={13}
+                          style={{ marginRight: 15 }}
+                        />
+                        {nav.name}
+                      </NavMenu>
+                    )
+                  })}
+                </Fragment>
+              )
+            } else {
+              return (
                 <NavMenu
+                  key={nav.id}
                   onClick={() => {
-                    movePage(nav.link)
+                    if (nav.id === 4) {
+                      logout()
+                      setIsNavOpened(false)
+                    } else {
+                      movePage(nav.link)
+                    }
                   }}
                 >
                   {nav.name}
                 </NavMenu>
-                {SUB_NAV_DATA.map((nav: NavMenu) => {
-                  return (
-                    <NavMenu
-                      key={nav.id}
-                      onClick={() => {
-                        movePage(nav.link)
-                      }}
-                    >
-                      <Image
-                        src="/images/navArrow.png"
-                        alt="menu arrow"
-                        width={13}
-                        height={13}
-                        style={{ marginRight: 15 }}
-                      />
-                      {nav.name}
-                    </NavMenu>
-                  )
-                })}
-              </Fragment>
-            )
-          } else {
+              )
+            }
+          })
+        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
             return (
-              <NavMenu
-                key={nav.id}
-                onClick={() => {
-                  movePage(nav.link)
-                }}
-              >
+              <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
                 {nav.name}
               </NavMenu>
             )
-          }
-        })
-        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
-          return (
-            <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
-              {nav.name}
-            </NavMenu>
-          )
-        })}
+          })}
     </div>
   )
 }

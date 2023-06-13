@@ -18,6 +18,16 @@ const UserAbout = ({ data }: Props) => {
   const [nick, setNick] = useState('')
   const [link, setLink] = useState('')
 
+  // 해당 페이지 history stack에서 제거
+  useEffect(() => {
+    router.beforePopState(({ url, as, options }) => {
+      if (as !== router.asPath) {
+        router.replace(as)
+      }
+      return true
+    })
+  }, [router])
+
   useEffect(() => {
     if (data.name) {
       setNick(data.name)

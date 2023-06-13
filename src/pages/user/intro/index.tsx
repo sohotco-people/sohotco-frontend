@@ -30,8 +30,8 @@ const UserIntro = ({ data }: Props) => {
       router.beforePopState(({ url, as, options }) => {
         if (as !== router.asPath) {
           openExitModal()
-          window.history.pushState('', '')
-          router.push(router.asPath)
+          window.history.replaceState('', '', router.asPath)
+          router.replace(router.asPath)
           return false
         }
 
@@ -70,7 +70,8 @@ const UserIntro = ({ data }: Props) => {
   }
 
   const clickCancelBtn = () => {
-    router.push('/user')
+    window.history.replaceState('', '', '/user')
+    router.replace('/user')
   }
 
   const clickSaveBtn = async () => {

@@ -6,9 +6,9 @@ import {
   NewProjectContext,
   LoginContext,
   SignInContext,
-  ProjectActiveStateContext
+  ProjectActiveStateContext,
 } from './contexts'
-import { Type_Project } from 'types/Types'
+import { Type_Project_Context } from 'types/Types'
 
 interface Props {
   children: React.ReactNode
@@ -65,19 +65,15 @@ export const LoginProvider = ({ children }: Props) => {
 }
 
 export const NewProjectProvider = ({ children }: Props) => {
-  const projectState = useState<Type_Project>({
-    id: '',
+  const projectState = useState<Type_Project_Context>({
     title: '',
     intro: '',
+    desc: '',
     meetType: '',
     location: [],
     week: [],
     time: [],
     position: [],
-    createdAt: '',
-    updatedAt: '',
-    isPublished: false,
-    viewCnt: '',
   })
 
   return (
@@ -91,10 +87,7 @@ export const ProjectActiveProvider = ({ children }: Props) => {
   const [arr, setArr] = useState<string[]>([])
 
   const setActive = (idx: string) => {
-    setArr(prev => [
-      ...prev,
-      idx
-    ])
+    setArr(prev => [...prev, idx])
   }
 
   const value = { arr, setActive }

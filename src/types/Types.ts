@@ -21,6 +21,7 @@ export interface Type_Detail {
 }
 
 export interface Type_Project {
+  id: string
   name: string
   intro: string
   description: string
@@ -39,8 +40,13 @@ export interface Type_Project_Context {
   intro: string
   desc: string
   meetType: string
-  location: Array<string>
-  week: Array<string>
-  time: Array<string>
-  position: Array<string>
+  locations: number[]
+  meeting_systems: number[]
+  week: number[]
+  time: number[]
+  position: number[]
+  createdAt: string
+  updatedAt: string
+  isPublished: boolean
+  viewCnt: string
 }

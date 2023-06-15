@@ -1,12 +1,14 @@
-import MeetingTime from '@templates/meetingTime'
+import MeetingTime from "@templates/meetingTime"
+import { useUser } from "context/hooks"
+import { useEffect } from "react"
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 const UserMeetingTime = () => {
+  const { me, getMe } = useUser()
   const router = useRouter()
 
-  // 해당 페이지 history stack에서 제거
   useEffect(() => {
+    getMe()
     router.beforePopState(({ url, as, options }) => {
       if (as !== router.asPath) {
         router.replace(as)
@@ -15,7 +17,9 @@ const UserMeetingTime = () => {
     })
   }, [router])
 
-  return <MeetingTime />
+  return (
+    <MeetingTime user={me} />
+  )
 }
 
 export default UserMeetingTime

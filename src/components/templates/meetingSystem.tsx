@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEventHandler, useContext, useState } from 'react'
+import { ChangeEvent, MouseEventHandler, useContext, useEffect, useState } from 'react'
 import Layout from '@atoms/layout'
 import SquareBtn from '@atoms/squareBtn'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
@@ -6,62 +6,56 @@ import LocationChecks from '@molecules/locationChecks'
 import MeetingSystemRadios from '@molecules/meetingSystemRadios'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
-import { useNewProjectState } from 'context/hooks'
+import { useNewProjectState, useUser } from 'context/hooks'
+import { Type_User } from 'types/Types'
 
 interface Props {
   type?: string
+  user?: Type_User
 }
 
-const MeetingSystem = ({ type = '' }: Props) => {
-  const [meetType, setMeetType] = useState('')
-  const [location, setLocation] = useState<string[]>([])
-  const { openModal } = useContext(ModalsDispatchContext)
-  const [newProject, setNewProject] = useNewProjectState()
+const MeetingSystem = ({ type = '', user }: Props) => {
   const router = useRouter()
+  const { openModal } = useContext(ModalsDispatchContext)
+
+  const [newProject, setNewProject] = useNewProjectState()
+  const { update, meetingSystem, getMeetingSystem, location, getLocation } = useUser()
+
+  const [locationChecks, setLocationChecks] = useState<number[]>([])
+  const [meetingSystemRadios, setMeetingSystemRadios] = useState<number[]>([])
 
   const handleRadios = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
 
-    let val = target.value
-    if (val == 'online') {
-      setLocation([])
+    let val = Number(target.value)
+    if (val == 1) {
+      setLocationChecks([])
     }
 
-    setMeetType(val)
+    setMeetingSystemRadios([val])
   }
 
   const handleChecks = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement
-
-    if (!location.includes(target.value) && location.length == 2) {
-      const modalobj = {
-        id: 'modal-max2',
-        content: '최대 2개까지 선택 가능합니다.',
-      }
-      openModal(modalobj)
-      target.checked = false
-      return
-    }
+    let val = Number(target.value)
 
     if (target.checked) {
-      setLocation([...location, target.value])
+      setLocationChecks([...locationChecks, val])
     } else {
-      setLocation(location.filter(l => l != target.value))
+      setLocationChecks(locationChecks.filter(l => l != val))
     }
   }
 
   const save = () => {
     let txt = null
 
-    if (meetType) {
-    } else {
-      txt = '회의 방식을 선택하세요.'
-    }
-
-    if (meetType && meetType == 'offline') {
-      if (location.length == 0) {
+    if (meetingSystemRadios.length > 0) {
+      if (meetingSystemRadios[0] == 2 && locationChecks.length == 0) {
         txt = '오프라인 위치를 선택하세요.'
       }
+
+    } else {
+      txt = '회의 방식을 선택하세요.'
     }
 
     if (txt) {
@@ -75,9 +69,11 @@ const MeetingSystem = ({ type = '' }: Props) => {
       openModal(modalobj)
     } else {
       if (type !== '') {
-        setNewProject({ ...newProject, meetType, location })
+        setNewProject({ ...newProject, meeting_systems: meetingSystemRadios, locations: locationChecks })
         router.back()
       }
+
+      update({ meeting_systems: meetingSystemRadios, locations: locationChecks })
     }
   }
 
@@ -85,14 +81,22 @@ const MeetingSystem = ({ type = '' }: Props) => {
     router.replace('/user')
   }
 
+  useEffect(() => {
+    getMeetingSystem()
+    getLocation()
+    if (user && user.meeting_systems[0].id == 2) {
+      meetingSystemRadios.push(2)
+    }
+  }, [user])
+
   return (
     <Layout>
       <h1 className="font-bold mb-10">원하는 회의방식을 선택해 주세요.</h1>
-      <MeetingSystemRadios onChange={handleRadios} />
-      {meetType == 'offline' && (
+      <MeetingSystemRadios meetingSystem={meetingSystem} user={user} onChange={handleRadios} />
+      {(meetingSystemRadios.length > 0 && meetingSystemRadios[0] == 2) && (
         <>
           <h1 className="font-bold mb-10">오프라인 위치를 선택해 주세요.</h1>
-          <LocationChecks onChange={handleChecks} />
+          <LocationChecks location={location} user={user} onChange={handleChecks} />
         </>
       )}
       {type === '' ? (

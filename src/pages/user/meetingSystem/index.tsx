@@ -1,12 +1,14 @@
-import MeetingSystem from '@templates/meetingSystem'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import MeetingSystem from "@templates/meetingSystem"
+import { useUser } from "context/hooks"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 const UserMeetingSystem = () => {
   const router = useRouter()
+  const { me, getMe } = useUser()
 
-  // 해당 페이지 history stack에서 제거
   useEffect(() => {
+    getMe()
     router.beforePopState(({ url, as, options }) => {
       if (as !== router.asPath) {
         router.replace(as)
@@ -15,7 +17,9 @@ const UserMeetingSystem = () => {
     })
   }, [router])
 
-  return <MeetingSystem />
+  return (
+    <MeetingSystem user={me} />
+  )
 }
 
 export default UserMeetingSystem

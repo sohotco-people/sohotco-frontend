@@ -51,7 +51,11 @@ export const useUser = () => {
 
   const [selected, setSelected] = useState<any[]>([])
   const [position, setPosition] = useState([])
+  const [location, setLocation] = useState([])
   const [experience, setExperience] = useState([])
+  const [meetingSystem, setMeetingSystem] = useState([])
+  const [week, setWeek] = useState([])
+  const [meetingTime, setMeetingTime] = useState([])
 
   const getMe = () => {
     fetchGet('/user/me', {}).then(res => {
@@ -71,10 +75,34 @@ export const useUser = () => {
     })
   }
 
+  const getMeetingSystem = () => {
+    fetchGet('/option/meeting-systems', {}).then(res => {
+      setMeetingSystem(res.data)
+    })
+  }
+
+  const getLocation = () => {
+    fetchGet('/option/locations', {}).then(res => {
+      setLocation(res.data)
+    })
+  }
+
+  const getWeek = () => {
+    fetchGet('/option/weeks', {}).then(res => {
+      setWeek(res.data)
+    })
+  }
+
+  const getMeetingTime = () => {
+    fetchGet('/option/meeting-times', {}).then(res => {
+      setMeetingTime(res.data)
+    })
+
+  }
+
   const update = (obj: any) => {
     fetchPut('/user/me', obj).then(res => {
       if (res.status == 200) {
-
         openModal({
           id: 'm-alert',
           content: '저장되었습니다.'
@@ -83,5 +111,15 @@ export const useUser = () => {
     })
   }
 
-  return { update, selected, setSelected, me, getMe, experience, getExperience, position, getPosition }
+  return {
+    update,
+    me, getMe,
+    selected, setSelected,
+    position, getPosition,
+    location, getLocation,
+    experience, getExperience,
+    meetingSystem, getMeetingSystem,
+    week, getWeek,
+    meetingTime, getMeetingTime
+  }
 }

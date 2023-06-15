@@ -9,6 +9,7 @@ import sohotco from '../../../public/images/sohotco-logo-02.png'
 const Header = () => {
   const router = useRouter()
   const { query } = router
+  const cookie = readCookie('SOHOTCO_OAUTH')
 
   const [, setIsNavOpened] = useNavOpenState()
   const [, setIsLogin] = useIsLoginState()
@@ -29,12 +30,12 @@ const Header = () => {
 
   // 로그인 상태 변경
   useEffect(() => {
-    const cookie = readCookie('SOHOTCO_OAUTH')
-
     if (cookie) {
       setIsLogin(true)
+    } else {
+      setIsLogin(false)
     }
-  }, [])
+  }, [cookie])
 
   return (
     <>

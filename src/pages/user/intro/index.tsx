@@ -2,7 +2,9 @@ import Layout from '@atoms/layout'
 import SubTitle from '@atoms/subTitle'
 import Textarea from '@atoms/textarea'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
+import { MY_DATA } from 'config'
 import { ModalsDispatchContext } from 'context/contexts'
+import { useUser } from 'context/hooks'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Type_User } from 'types/Types'
@@ -12,17 +14,22 @@ interface Props {
   data: Type_User
 }
 
-const UserIntro = ({ data }: Props) => {
+const UserIntro = () => {
   const router = useRouter()
   const { openModal } = useContext(ModalsDispatchContext)
+  const { me, getMe } = useUser()
 
   const [introText, setIntroText] = useState<string>('')
 
   useEffect(() => {
-    if (data.intro) {
-      setIntroText(data.intro)
+    getMe()
+  }, [])
+
+  useEffect(() => {
+    if (me?.intro) {
+      setIntroText(me.intro)
     }
-  }, [data.intro])
+  }, [me])
 
   useEffect(() => {
     if (introText.length > 0) {
@@ -30,8 +37,8 @@ const UserIntro = ({ data }: Props) => {
       router.beforePopState(({ url, as, options }) => {
         if (as !== router.asPath) {
           openExitModal()
-          window.history.pushState('', '')
-          router.push(router.asPath)
+          window.history.replaceState('', '', router.asPath)
+          router.replace(router.asPath)
           return false
         }
 
@@ -70,18 +77,18 @@ const UserIntro = ({ data }: Props) => {
   }
 
   const clickCancelBtn = () => {
-    router.push('/user')
+    window.history.replaceState('', '', '/user')
+    router.replace('/user')
   }
 
   const clickSaveBtn = async () => {
     if (introText.length > 0) {
-      const path = '/user/me'
       const params = {
         intro: introText,
       }
 
-      const res = await fetchPut(path, params)
-      if (res.code === 200) {
+      const res = await fetchPut(MY_DATA, params)
+      if (res.status === 200) {
         const modalObj = {
           id: 'modal-intro',
           content: '성공적으로 업데이트를 완료하였습니다.',
@@ -111,26 +118,3 @@ const UserIntro = ({ data }: Props) => {
 }
 
 export default UserIntro
-
-export async function getStaticProps() {
-  const data = {
-    id: 1,
-    name: 'name',
-    link: '/link',
-    intro: 'introduction',
-    positions: [{ id: 1, name: 'gn' }],
-    experiences: [{ id: 1, name: 'gn' }],
-    meetingLocations: [{ id: 1, name: 'gn' }],
-    meetingWeeks: [{ id: 1, name: 'gn' }],
-    meetingSystems: [{ id: 1, name: 'gn' }],
-    meetingTimes: [{ id: 1, name: 'gn' }],
-    createdAt: '2023-05-17',
-    deletedAt: '2023-05-17',
-  }
-
-  return {
-    props: {
-      data,
-    },
-  }
-}

@@ -70,10 +70,15 @@ export const NewProjectProvider = ({ children }: Props) => {
     intro: '',
     desc: '',
     meetType: '',
-    location: [],
+    locations: [],
+    meeting_systems: [],
     week: [],
     time: [],
     position: [],
+    createdAt: '',
+    updatedAt: '',
+    isPublished: false,
+    viewCnt: ''
   })
 
   return (

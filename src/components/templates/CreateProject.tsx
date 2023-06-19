@@ -150,10 +150,15 @@ const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
       intro: '',
       desc: '',
       meetType: '',
-      location: [],
+      locations: [],
+      meeting_systems: [],
       week: [],
       time: [],
       position: [],
+      createdAt: '',
+      updatedAt: '',
+      isPublished: false,
+      viewCnt: ''
     })
   }
 
@@ -199,8 +204,10 @@ const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
                 'br',
               ],
             }}
-            visiableDragbar={false}
             extraCommands={[]}
+            textareaProps={{
+              placeholder: 'test ....'
+            }}
           />
         </div>
       </div>

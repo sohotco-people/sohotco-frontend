@@ -110,6 +110,7 @@ const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
   const checkValidation = () => {
     let text = ''
 
+    console.log(newProject)
     if (newProject.title === '') {
       text = '프로젝트 제목을 입력하세요.'
     } else if (newProject.intro === '') {

@@ -35,6 +35,17 @@ export interface Type_Project {
   positions: Type_Detail[]
 }
 
+export interface Project_Post {
+  name: string,
+  intro: string,
+  description: string,
+  meeting_times: number[],
+  meeting_systems: number[],
+  weeks: number[],
+  positions: number[],
+  locations: number[]
+}
+
 export interface Type_Project_Context {
   title: string
   intro: string

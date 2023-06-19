@@ -7,9 +7,10 @@ interface Props {
     week: Type_Detail[]
     onChange: ChangeEventHandler
     user?: Type_User
+    optionChecked: number[]
 }
 
-const WeekChecks: React.FC<Props> = ({ week, onChange, user }) => {
+const WeekChecks: React.FC<Props> = ({ week, onChange, user, optionChecked }) => {
     const { openModal } = useContext(ModalsDispatchContext)
 
     const [checked, setChecked] = useState<number[]>([])
@@ -39,14 +40,20 @@ const WeekChecks: React.FC<Props> = ({ week, onChange, user }) => {
     }
 
     useEffect(() => {
-        if (user?.meeting_weeks && user?.meeting_weeks.length > 0) {
-            setChecked(user?.meeting_weeks.map((p) => p.id))
+        if (user?.weeks && user?.weeks.length > 0) {
+            setChecked(user?.weeks.map((p) => p.id))
         }
     }, [user])
 
+    useEffect(() => {
+        if (optionChecked) {
+            setChecked(optionChecked)
+        }
+    }, [optionChecked])
+
     return (
         <div className="grid grid-cols-2">
-            {week.map(obj => <CheckBox key={obj.id} value={obj.id} title={obj.name} onChange={handleChecks} check={checked.includes(obj.id)} />)}
+            {week.map(obj => <CheckBox key={obj.id} value={obj.id} title={obj.name} name="weeks" onChange={handleChecks} check={checked.includes(obj.id)} />)}
         </div>
     )
 }

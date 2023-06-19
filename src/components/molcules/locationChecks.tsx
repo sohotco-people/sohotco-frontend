@@ -7,9 +7,10 @@ interface Props {
   onChange: ChangeEventHandler
   location: Type_Detail[]
   user?: Type_User
+  optionChecked: number[]
 }
 
-const LocationChecks: React.FC<Props> = ({ onChange, location, user }) => {
+const LocationChecks: React.FC<Props> = ({ onChange, location, user, optionChecked }) => {
   const { openModal } = useContext(ModalsDispatchContext)
 
   const [checked, setChecked] = useState<number[]>([])
@@ -44,10 +45,16 @@ const LocationChecks: React.FC<Props> = ({ onChange, location, user }) => {
     }
   }, [user])
 
+  useEffect(() => {
+    if (optionChecked) {
+      setChecked(optionChecked)
+    }
+  }, [optionChecked])
+
   return (
     <div className="grid grid-cols-2">
       {location.map(obj =>
-        < CheckBox key={obj.id} value={obj.id} title={obj.name} onChange={handleChecks} check={checked.includes(obj.id)} />
+        <CheckBox key={obj.id} value={obj.id} name={'locations'} title={obj.name} onChange={handleChecks} check={checked.includes(obj.id)} />
       )}
     </div>
   )

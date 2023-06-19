@@ -6,9 +6,10 @@ interface Props {
     position: Type_User[]
     onChange: ChangeEventHandler
     user?: Type_User
+    optionChecked?: number[]
 }
 
-const PositionChecks: React.FC<Props> = ({ position, onChange, user }) => {
+const PositionChecks: React.FC<Props> = ({ position, onChange, user, optionChecked }) => {
     const [checked, setChecked] = useState<number[]>([])
 
     const handleChecks = (e: ChangeEvent) => {
@@ -30,9 +31,16 @@ const PositionChecks: React.FC<Props> = ({ position, onChange, user }) => {
         }
     }, [user])
 
+    useEffect(() => {
+        if (optionChecked) {
+            setChecked(optionChecked)
+        }
+
+    }, [optionChecked])
+
     return (
         <div className="grid grid-cols-1">
-            {position.map(obj => < CheckBox key={obj.id} value={obj.id} title={obj.name} onChange={handleChecks} check={checked.includes(obj.id)} />)}
+            {position.map(obj => < CheckBox key={obj.id} value={obj.id} title={obj.name} name="positions" onChange={handleChecks} check={checked.includes(obj.id)} />)}
         </div>
     )
 }

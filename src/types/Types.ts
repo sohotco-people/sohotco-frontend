@@ -6,7 +6,7 @@ export interface Type_User {
   intro: string
   positions: Type_Detail[]
   experiences: Type_Detail[]
-  meeting_locations: Type_Detail[]
+  locations: Type_Detail[]
   weeks: Type_Detail[]
   meeting_systems: Type_Detail[]
   meeting_times: Type_Detail[]

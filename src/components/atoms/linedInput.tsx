@@ -2,6 +2,7 @@ import { ChangeEventHandler } from 'react'
 
 interface Props {
   text: string
+  name?: string
   onChange: ChangeEventHandler<HTMLInputElement>
   placeholder?: string
   disabled?: boolean
@@ -9,6 +10,7 @@ interface Props {
 
 const LinedInput: React.FC<Props> = ({
   text,
+  name,
   onChange,
   placeholder = '텍스트를 입력하세요',
   disabled = false,
@@ -16,6 +18,7 @@ const LinedInput: React.FC<Props> = ({
   return (
     <input
       type="text"
+      name={name}
       value={text}
       onChange={onChange}
       placeholder={placeholder}

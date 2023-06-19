@@ -12,19 +12,21 @@ import dynamic from 'next/dynamic'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
 import { fetchPost } from 'util/fetch'
+import Options from '@organisms/options'
+import { useProject } from 'hooks/project'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 interface Props {
-  type?: string
   routeBack: string
-  clickSave: () => void
 }
 
-const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
+const CreateProject = ({ routeBack }: Props) => {
   const router = useRouter()
+  const [options, setOptions] = useState(0)
   const { openModal } = useContext(ModalsDispatchContext)
-  const [newProject, setNewProject] = useNewProjectState()
+
+  const { project, update, onChange, updateDescription } = useProject()
 
   useEffect(() => {
     const storage = window.sessionStorage
@@ -79,18 +81,6 @@ const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
     }
   }, [])
 
-  const setProjectTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewProject({ ...newProject, title: e.target.value })
-  }
-
-  const setProjectIntro = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewProject({ ...newProject, intro: e.target.value })
-  }
-
-  const setProjectDesc = (value: string | undefined) => {
-    setNewProject({ ...newProject, desc: value ?? '' })
-  }
-
   const openExitModal = () => {
     const modalObj = {
       id: 'modal-projectExit',
@@ -103,93 +93,51 @@ const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
     openModal(modalObj)
   }
 
-  const openPanel = (link: string) => {
-    router.push(router.asPath + '/' + link)
+  const openPanel = (idx: number) => {
+    setOptions(idx)
   }
 
-  const checkValidation = () => {
-    let text = ''
-
-    console.log(newProject)
-    if (newProject.title === '') {
-      text = '프로젝트 제목을 입력하세요.'
-    } else if (newProject.intro === '') {
-      text = '한줄 소개를 입력하세요.'
-    } else if (newProject.meetType === '') {
-      text = '회의 방식을 선택하세요.'
-    } else if (newProject.week.length === 0 || newProject.time.length === 0) {
-      text = '회의 일정을 선택하세요.'
-    } else if (newProject.position.length === 0) {
-      text = '모집 역할을 선택하세요.'
-    } else if (newProject.desc === '') {
-      text = '프로젝트 소개를 입력하세요.'
-    }
-
-    if (text === '') {
-      clickSave()
-    } else {
-      const modalObj = {
-        id: 'modal-projectSave',
-        content: text,
-      }
-
-      openModal(modalObj)
-    }
+  const save = () => {
+    setOptions(0)
   }
 
   const clickCancel = () => {
     window.sessionStorage.removeItem('blockProjectInfoModal')
-    resetState()
     window.history.replaceState('', '', routeBack)
     router.replace(routeBack)
-  }
-
-  const resetState = () => {
-    setNewProject({
-      title: '',
-      intro: '',
-      desc: '',
-      meetType: '',
-      locations: [],
-      meeting_systems: [],
-      week: [],
-      time: [],
-      position: [],
-      createdAt: '',
-      updatedAt: '',
-      isPublished: false,
-      viewCnt: ''
-    })
   }
 
   return (
     <Layout>
       <InputColumn
         title="프로젝트 제목"
-        text={newProject.title}
-        onChange={setProjectTitle}
+        name="name"
+        text={project.name}
+        onChange={onChange}
         placeholder="사이드 프로젝트 목록에 노출돼요."
       />
       <InputColumn
         title="한줄 소개"
-        text={newProject.intro}
-        onChange={setProjectIntro}
+        name="intro"
+        text={project.intro}
+        onChange={onChange}
         placeholder="프로젝트 제목의 추가 설명으로 노출돼요."
       />
       <div className="mb-15">
         <SubTitle>유형 선택</SubTitle>
         <div className="flex flex-col gap-5">
-          <Panel onClick={() => openPanel('meetingSystem')}>회의 방식</Panel>
-          <Panel onClick={() => openPanel('meetingTime')}>회의 일정</Panel>
-          <Panel onClick={() => openPanel('position')}>모집 역할</Panel>
+          <Options type={options} optionChecked={project} onchange={onChange} save={save} />
+          <Panel onClick={() => openPanel(3)}>회의 방식</Panel>
+          <Panel onClick={() => openPanel(4)}>회의 일정</Panel>
+          <Panel onClick={() => openPanel(1)}>모집 역할</Panel>
         </div>
       </div>
       <div className="mb-15">
         <SubTitle>프로젝트 소개</SubTitle>
         <div>
           <MDEditor
-            value={newProject.desc}
-            onChange={value => setProjectDesc(value)}
+            value={project.description}
+            onChange={value => updateDescription(value as string)}
             previewOptions={{
               allowedElements: [
                 'h1',
@@ -213,7 +161,7 @@ const CreateProject = ({ type = '', routeBack, clickSave }: Props) => {
       </div>
       <ButtonGroupPercent
         leftBtnClick={openExitModal}
-        rightBtnClick={checkValidation}
+        rightBtnClick={update}
       />
     </Layout>
   )

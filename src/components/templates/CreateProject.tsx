@@ -139,18 +139,7 @@ const CreateProject = ({ routeBack }: Props) => {
             value={project.description}
             onChange={value => updateDescription(value as string)}
             previewOptions={{
-              allowedElements: [
-                'h1',
-                'h2',
-                'h3',
-                'h4',
-                'h5',
-                'h6',
-                'p',
-                'a',
-                'span',
-                'br',
-              ],
+              allowedElements: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'span', 'br'],
             }}
             extraCommands={[]}
             textareaProps={{

@@ -31,8 +31,9 @@ export interface Type_Project {
   updated_at: Date
   meeting_systems: Type_Detail[]
   meeting_times: Type_Detail[]
-  meeting_weeks: Type_Detail[]
+  weeks: Type_Detail[]
   positions: Type_Detail[]
+  locations: Type_Detail[]
 }
 
 export interface Project_Post {

@@ -13,7 +13,7 @@ import { useState } from "react"
 
 const Search = () => {
     const [type, setType] = useState(0)
-    const { position, getPosition, experience, getExperience } = useUser()
+    const { position, getPosition, experience, getExperience, meetingSystem, getMeetingSystem, location, getLocation, week, getWeek, meetingTime, getMeetingTime } = useUser()
 
     const handleClick = (idx: number) => {
 
@@ -53,13 +53,19 @@ const Search = () => {
         )
     }
     if (type == 3) {
+        if (meetingSystem.length == 0) {
+            getMeetingSystem()
+        }
+        if (location.length == 0) {
+            getLocation()
+        }
         return (
             <div className="fixed top-20 bg-white w-full h-full z-10">
                 <Layout>
                     <h1 className="font-bold mb-10">원하는 회의방식을 선택해 주세요.</h1>
-                    <MeetingSystemRadios onChange={() => { }} />
+                    <MeetingSystemRadios meetingSystem={meetingSystem} onChange={() => { }} />
                     <h1 className="font-bold mb-10">오프라인 위치를 선택해 주세요.</h1>
-                    <LocationChecks onChange={() => { }} />
+                    <LocationChecks location={location} onChange={() => { }} />
 
                     <div className="fixed inset-x-0 bottom-0">
                         <SquareBtn width="w-full" type="point" onClick={() => { setType(0) }}>저장</SquareBtn>
@@ -70,15 +76,21 @@ const Search = () => {
         )
     }
     if (type == 4) {
+        if (week.length == 0) {
+            getWeek()
+        }
+        if (meetingTime.length == 0) {
+            getMeetingTime()
+        }
         return (
             <div className="fixed top-20 bg-white w-full h-full z-10">
                 <Layout>
                     <h1 className="font-bold mb-10">
                         원하는 회의 요일과 시간을 선택해 주세요.
                     </h1>
-                    <WeekChecks onChange={() => { }} />
+                    <WeekChecks week={week} onChange={() => { }} />
                     <Divider />
-                    <TimeRadios onChange={() => { }} />
+                    <TimeRadios meetingTime={meetingTime} onChange={() => { }} />
                     <div className="fixed inset-x-0 bottom-0">
                         <SquareBtn width="w-full" type="point" onClick={() => { setType(0) }}>저장</SquareBtn>
                     </div>

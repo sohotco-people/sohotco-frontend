@@ -11,11 +11,11 @@ interface Props {
 const InputModal: React.FC<Props> = ({ close, onChange, text }) => {
 
     return (
-        <div className="fixed top-0 left-0 right-0 bottom-0 m-auto z-30 flex justify-center items-center">
+        <div className="fixed top-0 left-0 right-0 bottom-0 m-auto flex justify-center items-center z-30 ">
             <div className="relative w-full h-full bg-slate-700 opacity-50"></div>
 
             <div className="absolute border-inherit w-[325px] rounded-2xl overflow-hidden bg-white">
-                <button className="absolute top-2.5 right-2.5 w-6 h-6 bg-contain bg-center bg-no-repeat bg-[url('/images/x.png')]" onClick={() => { }}></button>
+                <button className="absolute top-2.5 right-2.5 w-6 h-6 bg-contain bg-center bg-no-repeat bg-[url('/images/x.png')]" onClick={() => { close(false) }}></button>
 
                 <div className="mt-[50px] text-center">
                     <div className="text-[16px] leading-[19px] font-medium">전하고 싶은 말을 담아서<br />제안하세요</div>

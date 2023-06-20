@@ -39,7 +39,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="sticky top-0 h-20 w-full p-5 bg-white shadow-md flex justify-between items-center z-20 relative">
+      <div className="sticky top-0 h-20 w-full p-5 bg-white shadow-md flex justify-between items-center z-20">
         <Image
           src={sohotco}
           alt="logo"

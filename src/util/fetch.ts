@@ -1,28 +1,30 @@
+import { ModalsDispatchContext } from "context/contexts"
+import { useContext } from "react"
+
 const baseurl = 'http://localhost:8080'
 
 export const fetchGet = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path + '?' + new URLSearchParams(params).toString()
-  const option = {
+
+  const res = await fetch(url, {
     method: 'GET',
     credentials: 'include',
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      // cookie 라는 key는 안됨
-    },
-  } as RequestInit
+    }
+  })
 
-  try {
-    const res = await fetch(url, option)
+  if (res.ok)
     return res.json()
-  } catch (e) {
-    console.log('error: ', e)
-  }
+
+  throw new Error(res.statusText, { cause: res.status })
 }
 
 export const fetchPost = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
-  const option = {
+
+  const res = await fetch(url, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -30,19 +32,18 @@ export const fetchPost = async (path: string, params = {}, headers = {}) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  } as RequestInit
+  })
 
-  try {
-    const res = await fetch(url, option)
+  if (res.ok)
     return res.json()
-  } catch (e) {
-    console.log('error: ', e)
-  }
+
+  throw new Error(res.statusText, { cause: res.status })
 }
 
 export const fetchPut = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
-  const option = {
+
+  const res = await fetch(url, {
     method: 'PUT',
     credentials: 'include',
     headers: {
@@ -50,33 +51,31 @@ export const fetchPut = async (path: string, params = {}, headers = {}) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  } as RequestInit
+  })
 
-  try {
-    const res = await fetch(url, option)
+  if (res.ok)
     return res.json()
-  } catch (e) {
-    console.log('error: ', e)
-  }
+
+  throw new Error(res.statusText, { cause: res.status })
 }
 
-export const fetchDelete = async (path: string, headers = {}) => {
+export const fetchDelete = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
-  const option = {
-    method: 'DELETE',
+
+  const res = await fetch(url, {
+    method: 'PUT',
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
       ...headers,
+      'Content-Type': 'application/json',
     },
-  } as RequestInit
+    body: JSON.stringify(params),
+  })
 
-  try {
-    const res = await fetch(url, option)
+  if (res.ok)
     return res.json()
-  } catch (e) {
-    console.log('error: ', e)
-  }
+
+  throw new Error(res.statusText, { cause: res.status })
 }
 
 const uploadFiles = async (path: string, formData: FormData) => {
@@ -86,12 +85,11 @@ const uploadFiles = async (path: string, formData: FormData) => {
     body: formData,
   }
 
-  try {
-    const res = await fetch(url, option)
+  const res = await fetch(url, option)
+  if (res.ok)
     return res.json()
-  } catch (e) {
-    console.log('error: ', e)
-  }
+
+  throw new Error(res.statusText, { cause: res.status })
 
   // const photos = document.querySelector('input[type="file"][multiple]')
   // const formData = new FormData()

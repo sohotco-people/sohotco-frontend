@@ -60,6 +60,8 @@ export const useUser = () => {
   const getMe = () => {
     fetchGet('/user/me', {}).then(res => {
       setMe(res.data)
+    }).catch(err => {
+      openModal({ id: err.cause, content: err.message })
     })
   }
 

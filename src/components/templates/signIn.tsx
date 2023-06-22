@@ -29,7 +29,7 @@ const SignIn = () => {
         <div className="flex-1">
           <div className="flex flex-col items-center justify-center gap-5 h-full">
             <div className="w-[84px] h-[84px] bg-contain bg-center bg-no-repeat bg-[url('/images/sohotco-logo-02.png')]"></div>
-            <span className="text-xl font-extrabold">
+            <span className="text-xl font-bold" style={{ 'textShadow': '0px 4px 4px rgba(0, 0, 0, 0.25)' }}>
               소소하지만 확실한 코딩
             </span>
           </div>

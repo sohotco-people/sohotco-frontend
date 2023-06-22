@@ -28,8 +28,8 @@ const Page = () => {
             </Layout>
             <div className="fixed inset-x-0 bottom-0">
                 <SquareBtn width="w-full" type="point" onClick={() => { setIsOpenModal(true) }}>제안</SquareBtn>
-                {isOpenModal && <InputModal text={suggest} onChange={handleChange} close={setIsOpenModal} />}
             </div>
+            {isOpenModal && <InputModal text={suggest} onChange={handleChange} close={setIsOpenModal} />}
         </>
     )
 }

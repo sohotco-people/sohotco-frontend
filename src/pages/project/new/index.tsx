@@ -1,4 +1,5 @@
-import CreateProject from '@templates/CreateProject'
+import CreateProject from "@templates/createProject"
+
 
 const NewProject = () => {
 

@@ -7,7 +7,7 @@ interface Props {
     week: Type_Detail[]
     onChange: ChangeEventHandler
     user?: Type_User
-    optionChecked: number[]
+    optionChecked?: number[]
 }
 
 const WeekChecks: React.FC<Props> = ({ week, onChange, user, optionChecked }) => {

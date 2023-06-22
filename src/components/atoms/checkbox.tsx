@@ -1,11 +1,11 @@
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react"
 
 interface Props {
-    name?: string
-    value: number
     title: string
-    onChange: ChangeEventHandler
+    value: number
     check: boolean
+    onChange: ChangeEventHandler
+    name?: string
 }
 
 const CheckBox: React.FC<Props> = ({ value, title, onChange, check, name }) => {

@@ -2,8 +2,8 @@ import { ChangeEventHandler } from 'react'
 
 interface Props {
   text: string
-  name?: string
   onChange: ChangeEventHandler<HTMLInputElement>
+  name?: string
   placeholder?: string
   disabled?: boolean
 }

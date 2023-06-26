@@ -6,7 +6,7 @@ export interface Type_User {
   intro: string
   positions: Type_Detail[]
   experiences: Type_Detail[]
-  meeting_locations: Type_Detail[]
+  locations: Type_Detail[]
   weeks: Type_Detail[]
   meeting_systems: Type_Detail[]
   meeting_times: Type_Detail[]
@@ -31,8 +31,20 @@ export interface Type_Project {
   updated_at: Date
   meeting_systems: Type_Detail[]
   meeting_times: Type_Detail[]
-  meeting_weeks: Type_Detail[]
+  weeks: Type_Detail[]
   positions: Type_Detail[]
+  locations: Type_Detail[]
+}
+
+export interface Project_Post {
+  name: string,
+  intro: string,
+  description: string,
+  meeting_times: number[],
+  meeting_systems: number[],
+  weeks: number[],
+  positions: number[],
+  locations: number[]
 }
 
 export interface Type_Project_Context {

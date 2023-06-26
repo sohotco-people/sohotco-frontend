@@ -6,9 +6,10 @@ interface Props {
     onChange: ChangeEventHandler
     meetingSystem: Type_Detail[]
     user?: Type_User
+    optionChecked: number[]
 }
 
-const MeetingSystemRadios: React.FC<Props> = ({ onChange, meetingSystem, user }) => {
+const MeetingSystemRadios: React.FC<Props> = ({ onChange, meetingSystem, user, optionChecked }) => {
     const [checked, setChecked] = useState(0)
 
     const handleRadio = (e: ChangeEvent) => {
@@ -24,10 +25,16 @@ const MeetingSystemRadios: React.FC<Props> = ({ onChange, meetingSystem, user })
         }
     }, [user])
 
+    useEffect(() => {
+        if (optionChecked) {
+            setChecked(optionChecked[0])
+        }
+    }, [optionChecked])
+
     return (
         <div>
             {meetingSystem.map((obj, idx) =>
-                <Radio key={'checked' + idx} name={"meetingSystem"} value={obj.id} title={obj.name} onChange={handleRadio} checked={checked} />
+                <Radio key={'checked' + idx} name={"meeting_systems"} value={obj.id} title={obj.name} onChange={handleRadio} checked={checked} />
             )}
         </div>
     )

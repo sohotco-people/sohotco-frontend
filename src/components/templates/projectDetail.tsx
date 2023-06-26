@@ -1,7 +1,4 @@
-import SquareBtn from '@atoms/squareBtn'
 import ProjectInfo from '@organisms/projectInfo'
-import { ModalsDispatchContext } from 'context/contexts'
-import { useContext, useState } from 'react'
 import { Type_Project } from 'types/Types'
 
 interface Props {

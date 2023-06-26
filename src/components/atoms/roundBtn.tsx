@@ -2,9 +2,9 @@ import { MouseEventHandler } from 'react'
 
 interface Props {
   type: string
+  children: React.ReactNode
   onClick: MouseEventHandler<HTMLButtonElement>
   width?: string
-  children: React.ReactNode
 }
 
 /**
@@ -15,15 +15,13 @@ interface Props {
 const RoundBtn: React.FC<Props> = ({ type, onClick, width, children }) => {
   const style = (function () {
     if (type === 'white') {
-      return `${
-        width ? width + ' ' : ''
-      }bg-white active:bg-gray4 text-black border border-black`
+      return `${width ? width + ' ' : ''
+        }bg-white active:bg-gray4 text-black border border-black`
     } else if (type === 'grey') {
       return `${width ? width + ' ' : ''}bg-gray4 active:bg-gray3 text-black`
     } else if (type === 'point') {
-      return `${
-        width ? width + ' ' : ''
-      }bg-primary1 active:bg-primary2 text-white`
+      return `${width ? width + ' ' : ''
+        }bg-primary1 active:bg-primary2 text-white`
     }
   })()
 

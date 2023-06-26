@@ -3,8 +3,8 @@ import { MouseEventHandler } from 'react'
 interface Props {
   type: string
   onClick: MouseEventHandler<HTMLButtonElement>
-  width?: string
   children: React.ReactNode
+  width?: string
 }
 
 /**
@@ -19,9 +19,8 @@ const SquareBtn: React.FC<Props> = ({ type, onClick, width, children }) => {
     } else if (type === 'grey') {
       return `${width ? width + ' ' : ''}bg-gray4 active:bg-gray3 text-black`
     } else if (type === 'point') {
-      return `${
-        width ? width + ' ' : ''
-      }bg-primary1 active:bg-primary2 text-white`
+      return `${width ? width + ' ' : ''
+        }bg-primary1 active:bg-primary2 text-white`
     }
   })()
 

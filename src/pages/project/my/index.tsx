@@ -2,12 +2,13 @@ import SquareBtn from '@atoms/squareBtn'
 import ProjectDetail from '@templates/projectDetail'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useProject } from 'hooks/project'
-import { useContext, useEffect, useState } from 'react'
-import { Type_Project } from 'types/Types'
+import { useRouter } from 'next/router'
+import { useContext, useEffect } from 'react'
 
 const ProjectInfo = () => {
   const { openModal } = useContext(ModalsDispatchContext)
   const { projectGet, my, isPublished, updateIsPublished, onDelete } = useProject()
+  const rotuer = useRouter()
 
   const leftBtnClick = () => {
     let modalObj = {
@@ -22,7 +23,9 @@ const ProjectInfo = () => {
     openModal(modalObj)
   }
 
-  const rightBtnClick = () => { }
+  const rightBtnClick = () => {
+    rotuer.push('/project/update')
+  }
 
   useEffect(() => {
     my()

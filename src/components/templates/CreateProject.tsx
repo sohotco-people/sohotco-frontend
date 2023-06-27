@@ -17,14 +17,21 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 interface Props {
   routeBack: string
+  isUpdate?: boolean
 }
 
-const CreateProject = ({ routeBack }: Props) => {
+const CreateProject = ({ routeBack, isUpdate }: Props) => {
   const router = useRouter()
   const [options, setOptions] = useState(0)
   const { openModal } = useContext(ModalsDispatchContext)
 
-  const { project, update, onChange, updateDescription } = useProject()
+  const { project, my, update, onChange, updateDescription } = useProject()
+
+  useEffect(() => {
+    if (isUpdate) {
+      my()
+    }
+  }, [])
 
   useEffect(() => {
     const storage = window.sessionStorage
@@ -148,7 +155,7 @@ const CreateProject = ({ routeBack }: Props) => {
       </div>
       <ButtonGroupPercent
         leftBtnClick={openExitModal}
-        rightBtnClick={update}
+        rightBtnClick={() => update(isUpdate)}
       />
     </Layout>
   )

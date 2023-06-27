@@ -37,68 +37,67 @@ const Nav = () => {
 
   return (
     <div
-      className={`fixed top-20 bg-white w-full h-full z-10 ${
-        isNavOpened ? 'visible' : 'invisible'
-      }`}
+      className={`fixed top-20 bg-white w-full h-full z-10 ${isNavOpened ? 'visible' : 'invisible'
+        }`}
     >
       {isLogin
         ? NAV_DATA_LOGIN.map((nav: NavMenu) => {
-            if (nav.id === 2) {
-              return (
-                <Fragment key={nav.id}>
-                  <NavMenu
-                    onClick={() => {
-                      movePage(nav.link)
-                    }}
-                  >
-                    {nav.name}
-                  </NavMenu>
-                  {SUB_NAV_DATA.map((nav: NavMenu) => {
-                    return (
-                      <NavMenu
-                        key={nav.id}
-                        onClick={() => {
-                          movePage(nav.link)
-                        }}
-                      >
-                        <Image
-                          src="/images/navArrow.png"
-                          alt="menu arrow"
-                          width={13}
-                          height={13}
-                          style={{ marginRight: 15 }}
-                        />
-                        {nav.name}
-                      </NavMenu>
-                    )
-                  })}
-                </Fragment>
-              )
-            } else {
-              return (
+          if (nav.id === 2) {
+            return (
+              <Fragment key={nav.id}>
                 <NavMenu
-                  key={nav.id}
                   onClick={() => {
-                    if (nav.id === 4) {
-                      logout()
-                      setIsNavOpened(false)
-                    } else {
-                      movePage(nav.link)
-                    }
+                    movePage(nav.link)
                   }}
                 >
                   {nav.name}
                 </NavMenu>
-              )
-            }
-          })
-        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
+                {SUB_NAV_DATA.map((nav: NavMenu) => {
+                  return (
+                    <NavMenu
+                      key={nav.id}
+                      onClick={() => {
+                        movePage(nav.link)
+                      }}
+                    >
+                      <Image
+                        src="/images/navArrow.png"
+                        alt="menu arrow"
+                        width={13}
+                        height={13}
+                        style={{ marginRight: 15 }}
+                      />
+                      {nav.name}
+                    </NavMenu>
+                  )
+                })}
+              </Fragment>
+            )
+          } else {
             return (
-              <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
+              <NavMenu
+                key={nav.id}
+                onClick={() => {
+                  if (nav.id === 4) {
+                    logout()
+                    setIsNavOpened(false)
+                  } else {
+                    movePage(nav.link)
+                  }
+                }}
+              >
                 {nav.name}
               </NavMenu>
             )
-          })}
+          }
+        })
+        : NAV_DATA_NOTLOGIN.map((nav: NavMenu) => {
+          return (
+            <NavMenu key={nav.id} onClick={() => movePage(nav.link)}>
+              {nav.name}
+            </NavMenu>
+          )
+        })}
     </div>
   )
 }
@@ -115,7 +114,7 @@ const NAV_DATA_LOGIN = [
 const SUB_NAV_DATA = [
   { id: 2.1, name: '내 소식', link: '/' },
   { id: 2.2, name: '내 프로젝트', link: '/project/my' }, // or 프로젝트 생성(프로젝트 없을 시)
-  { id: 2.3, name: '팀원 찾기', link: '/' },
+  { id: 2.3, name: '팀원 찾기', link: '/teammate' },
 ]
 
 export default Nav

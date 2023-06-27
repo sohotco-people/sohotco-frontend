@@ -26,5 +26,13 @@ export const useUser = () => {
         })
     }
 
-    return { update, me, getMe }
+    const getUser = () => {
+        fetchGet('/user', {}).then(res => {
+            console.log(res.data)
+        }).catch(err => {
+            openModal({ id: err.cause, content: err.message })
+        })
+    }
+
+    return { update, me, getMe, getUser }
 }

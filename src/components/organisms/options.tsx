@@ -8,7 +8,7 @@ import PositionChecks from "@molecules/positionChecks"
 import TimeRadios from "@molecules/timeRadios"
 import WeekChecks from "@molecules/weekChecks"
 import { useUser } from "context/hooks"
-import React, { ChangeEvent } from "react"
+import React, { ChangeEvent, useEffect } from "react"
 
 interface Props {
     type: number
@@ -27,10 +27,17 @@ const Options: React.FC<Props> = ({ type = 0, onchange, save, optionChecked }) =
 
     const { position, getPosition, experience, getExperience, meetingSystem, getMeetingSystem, location, getLocation, week, getWeek, meetingTime, getMeetingTime } = useUser()
 
+    useEffect(() => {
+        getMeetingSystem()
+        getPosition()
+        getLocation()
+        getExperience()
+        getWeek()
+        getMeetingTime()
+    }, [])
+
     if (type == 1) {
-        if (position.length == 0) {
-            getPosition()
-        }
+
         return (
             <div className="fixed top-20 bg-white w-full h-full z-20">
                 <Layout>
@@ -44,9 +51,7 @@ const Options: React.FC<Props> = ({ type = 0, onchange, save, optionChecked }) =
         )
     }
     if (type == 2) {
-        if (experience.length == 0) {
-            getExperience()
-        }
+
         return (
             <div className="fixed top-20 bg-white w-full h-full z-20">
                 <Layout>
@@ -60,12 +65,7 @@ const Options: React.FC<Props> = ({ type = 0, onchange, save, optionChecked }) =
         )
     }
     if (type == 3) {
-        if (meetingSystem.length == 0) {
-            getMeetingSystem()
-        }
-        if (location.length == 0) {
-            getLocation()
-        }
+
         return (
             <div className="fixed top-20 bg-white w-full h-full z-20">
                 <Layout>
@@ -83,12 +83,7 @@ const Options: React.FC<Props> = ({ type = 0, onchange, save, optionChecked }) =
         )
     }
     if (type == 4) {
-        if (week.length == 0) {
-            getWeek()
-        }
-        if (meetingTime.length == 0) {
-            getMeetingTime()
-        }
+
         return (
             <div className="fixed top-20 bg-white w-full h-full z-20">
                 <Layout>

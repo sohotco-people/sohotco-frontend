@@ -12,7 +12,7 @@ export interface Type_User {
   meeting_times: Type_Detail[]
   created_at: Date
   deleted_at?: Date
-  project: Type_Project[]
+  project: {}
 }
 
 export interface Type_Detail {
@@ -44,7 +44,8 @@ export interface Project_Post {
   meeting_systems: number[],
   weeks: number[],
   positions: number[],
-  locations: number[]
+  locations: number[],
+  experiences: number[]
 }
 
 export interface Type_Project_Context {

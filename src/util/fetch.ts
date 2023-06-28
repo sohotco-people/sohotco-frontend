@@ -1,10 +1,10 @@
-import { ModalsDispatchContext } from "context/contexts"
-import { useContext } from "react"
+import queryString from 'query-string'
 
 const baseurl = 'http://localhost:8080'
 
 export const fetchGet = async (path: string, params = {}, headers = {}) => {
-  const url = baseurl + path + '?' + new URLSearchParams(params).toString()
+
+  const url = baseurl + path + '?' + queryString.stringify(params)
 
   const res = await fetch(url, {
     method: 'GET',

@@ -7,7 +7,7 @@ interface Props {
   onChange: ChangeEventHandler
   location: Type_Detail[]
   user?: Type_User
-  optionChecked: number[]
+  optionChecked?: number[]
 }
 
 const LocationChecks: React.FC<Props> = ({ onChange, location, user, optionChecked }) => {

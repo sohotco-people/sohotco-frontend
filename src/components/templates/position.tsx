@@ -3,7 +3,9 @@ import SquareBtn from '@atoms/squareBtn'
 import ButtonGroupPercent from '@molecules/buttonGroupPercent'
 import PositionChecks from '@molecules/positionChecks'
 import { ModalsDispatchContext } from 'context/contexts'
-import { useNewProjectState, useUser } from 'context/hooks'
+import { useNewProjectState } from 'context/hooks'
+import { useOption } from 'hooks/option'
+import { useUser } from 'hooks/user'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useContext, useEffect } from 'react'
 import { Type_User } from 'types/Types'
@@ -18,7 +20,8 @@ const Position = ({ type = '', user }: Props) => {
   const { openModal } = useContext(ModalsDispatchContext)
   const [newProject, setNewProject] = useNewProjectState()
 
-  const { update, position, getPosition, selected, setSelected } = useUser()
+  const { position, getPosition, } = useOption()
+  const { update, selected, setSelected } = useUser()
 
   const handleChecks = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement

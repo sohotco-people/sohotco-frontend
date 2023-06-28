@@ -6,7 +6,7 @@ interface Props {
     onChange: ChangeEventHandler
     meetingSystem: Type_Detail[]
     user?: Type_User
-    optionChecked: number[]
+    optionChecked?: number[]
 }
 
 const MeetingSystemRadios: React.FC<Props> = ({ onChange, meetingSystem, user, optionChecked }) => {

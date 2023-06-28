@@ -6,6 +6,24 @@ import { fetchGet, fetchPut } from "util/fetch"
 export const useUser = () => {
     const { openModal } = useContext(ModalsDispatchContext)
     const [me, setMe] = useState<Type_User>()
+    const [userOne, setUserOne] = useState<Type_User>({
+        id: 0,
+        kakao_id: '',
+        name: '',
+        link: '',
+        intro: '',
+        positions: [],
+        experiences: [],
+        locations: [],
+        weeks: [],
+        meeting_systems: [],
+        meeting_times: [],
+        created_at: new Date(),
+        deleted_at: new Date(),
+        project: {}
+    })
+    const [user, setUser] = useState<Type_User[]>([])
+    const [selected, setSelected] = useState<any[]>([])
 
     const getMe = () => {
         fetchGet('/user/me', {}).then(res => {
@@ -26,13 +44,21 @@ export const useUser = () => {
         })
     }
 
-    const getUser = () => {
-        fetchGet('/user', {}).then(res => {
-            console.log(res.data)
+    const getUser = (param: object) => {
+        fetchGet('/user', param).then(res => {
+            setUser(res.data)
         }).catch(err => {
             openModal({ id: err.cause, content: err.message })
         })
     }
 
-    return { update, me, getMe, getUser }
+    const getUserById = (id: string) => {
+        fetchGet('/user/' + id).then(res => {
+            setUserOne(res.data)
+        }).catch(err => {
+            openModal({ id: err.cause, content: err.message })
+        })
+    }
+
+    return { update, me, getMe, user, getUser, selected, setSelected, userOne, getUserById }
 }

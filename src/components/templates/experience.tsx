@@ -2,7 +2,8 @@ import Layout from "@atoms/layout"
 import ButtonGroupPercent from "@molecules/buttonGroupPercent"
 import ExperienceRadios from "@molecules/experienceRadios"
 import { ModalsDispatchContext } from "context/contexts"
-import { useUser } from "context/hooks"
+import { useOption } from "hooks/option"
+import { useUser } from "hooks/user"
 import { useRouter } from "next/router"
 import React, { ChangeEvent, useContext, useEffect, useState } from "react"
 import { Type_User } from "types/Types"
@@ -14,8 +15,8 @@ interface Props {
 const Experience: React.FC<Props> = ({ user }) => {
     const router = useRouter()
     const { openModal } = useContext(ModalsDispatchContext)
-
-    const { update, experience, getExperience, selected, setSelected } = useUser()
+    const { experience, getExperience } = useOption()
+    const { update, selected, setSelected } = useUser()
 
     const handleRadios = (e: ChangeEvent) => {
         const target = e.target as HTMLInputElement

@@ -1,14 +1,19 @@
 import Layout from "@atoms/layout"
 import ProjectBasicInfo from "@molecules/projectBasicInfo"
 import ProjectContent from "@molecules/projectContent"
+import { formatDistance, parseISO } from "date-fns"
+import { ko } from "date-fns/locale"
 import { Type_Project } from "types/Types"
-import { elapsedTime } from "util/time"
 
 interface Props {
 	project: Type_Project
 }
 
 const ProjectInfo: React.FC<Props> = ({ project }) => {
+
+	if (!project) {
+		return (<></>)
+	}
 
 	let { name, intro, meeting_systems, weeks, meeting_times, positions, created_at, locations } = project
 
@@ -26,7 +31,10 @@ const ProjectInfo: React.FC<Props> = ({ project }) => {
 		<Layout>
 			<div className="grid gap-[60px]">
 				<div className="grid gap-2.5">
-					<ProjectBasicInfo title={name} subTexts={[elapsedTime(created_at.toLocaleString())]} />
+					<ProjectBasicInfo title={name} subTexts={[formatDistance(parseISO(created_at), new Date(), {
+						addSuffix: true,
+						locale: ko
+					})]} />
 				</div>
 
 				<ProjectContent title={"회의 방식"} content={meeting_systems.map(sys => sys.name).join() + loStr} />

@@ -164,5 +164,11 @@ export const useProject = () => {
         })
     }
 
-    return { project, update, onChange, updateDescription, my, projectGet, isPublished, updateIsPublished, onDelete }
+    const getProjectById = (id: number) => {
+        fetchGet('/project/' + id).then(res => {
+            setProjectGet(res.data)
+        })
+    }
+
+    return { project, update, onChange, updateDescription, my, projectGet, isPublished, updateIsPublished, onDelete, getProjectById }
 }

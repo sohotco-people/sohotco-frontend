@@ -62,7 +62,7 @@ export const useProject = () => {
 
     }
 
-    const update = () => {
+    const update = (isUpdate?: boolean) => {
         let obj = {
             id: 'poject',
             content: ''
@@ -82,19 +82,40 @@ export const useProject = () => {
             openModal(obj)
             return
         }
-        fetchPost('/project/me', project).then(res => {
-            if (res.status == 200) {
-                obj.content = '저장 되었습니다.'
-                openModal(obj)
-            }
-        }).catch(e => {
-            console.log(e)
-        })
+
+        if (isUpdate) {
+            fetchPut('/project/me', project).then(res => {
+                if (res.status == 200) {
+                    obj.content = '저장 되었습니다.'
+                    openModal(obj)
+                }
+            }).catch(e => {
+                console.log(e)
+            })
+        } else {
+            fetchPost('/project/me', project).then(res => {
+                if (res.status == 200) {
+                    obj.content = '저장 되었습니다.'
+                    openModal(obj)
+                }
+            }).catch(e => {
+                console.log(e)
+            })
+        }
     }
 
     const my = () => {
         fetchGet('/project/me', project).then(res => {
             if (res.status == 200) {
+                const projectObj = res.data as Type_Project
+                setProject({
+                    ...projectObj,
+                    meeting_times: projectObj.meeting_times.map((m) => m.id),
+                    meeting_systems: projectObj.meeting_systems.map(m => m.id),
+                    weeks: projectObj.weeks.map(w => w.id),
+                    positions: projectObj.positions.map(p => p.id),
+                    locations: projectObj.locations.map(l => l.id),
+                })
                 setProjectGet(res.data)
                 setIsPublished(res.data.is_published)
             } else {
@@ -102,7 +123,7 @@ export const useProject = () => {
             }
             return
         }).catch(e => {
-            console.log(e)
+            router.replace('/project/new')
         })
     }
 

@@ -63,7 +63,7 @@ export const fetchDelete = async (path: string, params = {}, headers = {}) => {
   const url = baseurl + path
 
   const res = await fetch(url, {
-    method: 'PUT',
+    method: 'DELETE',
     credentials: 'include',
     headers: {
       ...headers,

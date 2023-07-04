@@ -6,9 +6,10 @@ interface Props {
     experience: Type_Detail[]
     user?: Type_User
     onChange: ChangeEventHandler
+    optionChecked?: number[]
 }
 
-const ExperienceRadios: React.FC<Props> = ({ experience, user, onChange }) => {
+const ExperienceRadios: React.FC<Props> = ({ experience, user, onChange, optionChecked }) => {
 
     const [checked, setChecked] = useState(0)
 
@@ -24,10 +25,16 @@ const ExperienceRadios: React.FC<Props> = ({ experience, user, onChange }) => {
         }
     }, [user])
 
+    useEffect(() => {
+        if (optionChecked) {
+            setChecked(optionChecked[0])
+        }
+    }, [optionChecked])
+
     return (
         <div>
             {experience.map((obj, idx) =>
-                <Radio key={idx} name={"experience"} value={obj.id} title={obj.name} onChange={handleRadio} checked={checked} />
+                <Radio key={idx} name={"experiences"} value={obj.id} title={obj.name} onChange={handleRadio} checked={checked} />
             )}
         </div>
     )

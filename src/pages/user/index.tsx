@@ -5,8 +5,8 @@ import Panel from '@atoms/panel'
 import { ModalsDispatchContext } from 'context/contexts'
 import { fetchDelete } from 'util/fetch'
 import { MY_DATA } from 'config'
-import { useUser } from 'context/hooks'
 import { useLogout } from 'hooks/hooks'
+import { useUser } from 'hooks/user'
 
 const MyProfile = () => {
   const router = useRouter()

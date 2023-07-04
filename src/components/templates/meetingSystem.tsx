@@ -6,8 +6,10 @@ import LocationChecks from '@molecules/locationChecks'
 import MeetingSystemRadios from '@molecules/meetingSystemRadios'
 import { ModalsDispatchContext } from 'context/contexts'
 import { useRouter } from 'next/router'
-import { useNewProjectState, useUser } from 'context/hooks'
+import { useNewProjectState } from 'context/hooks'
 import { Type_User } from 'types/Types'
+import { useOption } from 'hooks/option'
+import { useUser } from 'hooks/user'
 
 interface Props {
   type?: string
@@ -19,7 +21,9 @@ const MeetingSystem = ({ type = '', user }: Props) => {
   const { openModal } = useContext(ModalsDispatchContext)
 
   const [newProject, setNewProject] = useNewProjectState()
-  const { update, meetingSystem, getMeetingSystem, location, getLocation } = useUser()
+
+  const { meetingSystem, getMeetingSystem, location, getLocation } = useOption()
+  const { update } = useUser()
 
   const [locationChecks, setLocationChecks] = useState<number[]>([])
   const [meetingSystemRadios, setMeetingSystemRadios] = useState<number[]>([])
@@ -92,11 +96,11 @@ const MeetingSystem = ({ type = '', user }: Props) => {
   return (
     <Layout>
       <h1 className="font-bold mb-10">원하는 회의방식을 선택해 주세요.</h1>
-      <MeetingSystemRadios meetingSystem={meetingSystem} user={user} onChange={handleRadios} />
+      <MeetingSystemRadios meetingSystem={meetingSystem} user={user} onChange={handleRadios} optionChecked={[]} />
       {(meetingSystemRadios.length > 0 && meetingSystemRadios[0] == 2) && (
         <>
           <h1 className="font-bold mb-10">오프라인 위치를 선택해 주세요.</h1>
-          <LocationChecks location={location} user={user} onChange={handleChecks} />
+          <LocationChecks location={location} user={user} onChange={handleChecks} optionChecked={[]} />
         </>
       )}
       {type === '' ? (

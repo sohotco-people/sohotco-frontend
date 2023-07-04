@@ -1,8 +1,9 @@
 import Layout from "@atoms/layout"
 import TeamMateInfo from "@molecules/teamMateInfo"
+import { Type_User } from "types/Types"
 
 interface Props {
-    mate: {}
+    mate: Type_User
 }
 
 const TeamMateListItem: React.FC<Props> = ({ mate }) => {
@@ -11,7 +12,7 @@ const TeamMateListItem: React.FC<Props> = ({ mate }) => {
     return (
         < Layout >
             <div className="grid gap-[20px]">
-                <TeamMateInfo />
+                <TeamMateInfo mate={mate} />
             </div>
         </Layout >
     )

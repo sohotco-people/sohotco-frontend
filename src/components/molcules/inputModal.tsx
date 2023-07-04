@@ -6,9 +6,10 @@ interface Props {
     text: string
     onChange: ChangeEventHandler
     close: Function
+    ok: Function
 }
 
-const InputModal: React.FC<Props> = ({ close, onChange, text }) => {
+const InputModal: React.FC<Props> = ({ close, onChange, text, ok }) => {
 
     return (
         <div className="fixed top-0 left-0 right-0 bottom-0 m-auto flex justify-center items-center z-30 ">
@@ -25,7 +26,7 @@ const InputModal: React.FC<Props> = ({ close, onChange, text }) => {
                 </div>
                 <div className="grid grid-cols-2">
                     <SquareBtn type={'grey'} onClick={() => { close(false) }}>취소</SquareBtn>
-                    <SquareBtn type={'point'} onClick={() => { }}>전송</SquareBtn>
+                    <SquareBtn type={'point'} onClick={() => { ok() }}>전송</SquareBtn>
                 </div>
             </div>
         </div>

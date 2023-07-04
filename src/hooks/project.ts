@@ -18,7 +18,8 @@ export const useProject = () => {
         meeting_systems: [],
         weeks: [],
         positions: [],
-        locations: []
+        locations: [],
+        experiences: []
     })
 
     const [isPublished, setIsPublished] = useState(false)
@@ -65,7 +66,8 @@ export const useProject = () => {
     const update = (isUpdate?: boolean) => {
         let obj = {
             id: 'poject',
-            content: ''
+            content: '',
+            confirm: () => { }
         }
         if (!project.name) {
             obj.content = '프로젝트 제목을 입력해주세요.'
@@ -96,6 +98,7 @@ export const useProject = () => {
             fetchPost('/project/me', project).then(res => {
                 if (res.status == 200) {
                     obj.content = '저장 되었습니다.'
+                    obj.confirm = () => { router.replace('/project/my') }
                     openModal(obj)
                 }
             }).catch(e => {
@@ -115,6 +118,7 @@ export const useProject = () => {
                     weeks: projectObj.weeks.map(w => w.id),
                     positions: projectObj.positions.map(p => p.id),
                     locations: projectObj.locations.map(l => l.id),
+                    experiences: []
                 })
                 setProjectGet(res.data)
                 setIsPublished(res.data.is_published)
@@ -160,5 +164,11 @@ export const useProject = () => {
         })
     }
 
-    return { project, update, onChange, updateDescription, my, projectGet, isPublished, updateIsPublished, onDelete }
+    const getProjectById = (id: number) => {
+        fetchGet('/project/' + id).then(res => {
+            setProjectGet(res.data)
+        })
+    }
+
+    return { project, update, onChange, updateDescription, my, projectGet, isPublished, updateIsPublished, onDelete, getProjectById }
 }

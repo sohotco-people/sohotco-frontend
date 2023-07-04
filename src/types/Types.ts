@@ -12,7 +12,7 @@ export interface Type_User {
   meeting_times: Type_Detail[]
   created_at: Date
   deleted_at?: Date
-  project: Type_Project[]
+  project: {}
 }
 
 export interface Type_Detail {
@@ -27,7 +27,7 @@ export interface Type_Project {
   description: string
   views: number
   is_published: boolean
-  created_at: Date
+  created_at: string
   updated_at: Date
   meeting_systems: Type_Detail[]
   meeting_times: Type_Detail[]
@@ -44,7 +44,8 @@ export interface Project_Post {
   meeting_systems: number[],
   weeks: number[],
   positions: number[],
-  locations: number[]
+  locations: number[],
+  experiences: number[]
 }
 
 export interface Type_Project_Context {
@@ -61,4 +62,15 @@ export interface Type_Project_Context {
   updatedAt: string
   isPublished: boolean
   viewCnt: string
+}
+
+export interface Type_News {
+  id: number
+  requestor_id: number
+  requestor_name: string
+  respondent_id: number
+  respondent_name: string
+  project_id: number
+  message: string
+  created_at: string
 }
